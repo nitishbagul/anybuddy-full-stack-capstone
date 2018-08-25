@@ -2,496 +2,78 @@
 <html lang="en">
 
 <head>
-    <title>WhereIsIt</title>
+    <title>AnyBuddy</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Easily track items that are likely to get lost">
-    <!--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">-->
+    <meta name="description" content="Find buddies to make that activity a fun">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-    <div id="messageBox" class="demoMessage">
-        <span>Loading ...</span>
-        <!--            <button id="hideBtn">X</button>-->
-    </div>
+
     <main class="welcome-page" role="main">
-        <section class="main-window">
-            <header role="banner">
-                <h1>WhereIsIt</h1>
-                <p class="banner-text">Tell us once where it is and we will never forget!</p>
-                <input type="hidden" id="loggedInUserId" value="">
-            </header>
-            <div class="main-content">
-
-                <div class="feature-list">
-                    <button class="show-login-container">Login</button>
-                    <span>OR</span>
-                    <button class="show-registration-container">Register</button>
-                    <div class="features-container">
-                        <div class="features">
-                            <i class="fas fa-check"></i>
-                            <p class="feature-description">Add a list of items to track</p>
-                        </div>
-                        <div class="features">
-                            <i class="fas fa-check"></i>
-                            <p class="feature-description">Add a place to hold items</p>
-                        </div>
-                        <div class="features">
-                            <i class="fas fa-check"></i>
-                            <p class="feature-description">Add an area to host places</p>
-                        </div>
-                        <div class="features">
-                            <i class="fas fa-check"></i>
-                            <p class="feature-description">Divide items into many categories</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="log-in-container">
-                    <form class="login-form">
-                        <h2 class="log-in-text">Log in</h2>
-                        <fieldset name="user-info" class="user-info">
-
-                            <label for="loginUserName">Username</label>
-                            <input role="textbox" type="text" name="username" id="loginUserName" value="demouser" required>
-
-                            <label for="loginPassword">Password</label>
-                            <input role="textbox" type="password" name="pwd" id="loginPassword" value="demopassword" required>
-
-                            <button role="button" type="submit" class="log-in-button">Log In</button>
-
-                        </fieldset>
-                    </form>
-                </div>
-
-                <div class="register-container">
-                    <form class="register-form">
-                        <h2 class="register-text">Register</h2>
-                        <fieldset name="user-info" class="user-info">
-
-                            <label for="registerEmail">Email</label>
-                            <input role="textbox" placeholder="foo@bar.com" type="email" name="email" id="registerEmail" required>
-
-                            <label for="registerUserName">Username</label>
-                            <input role="textbox" type="text" name="username" id="registerUserName" required>
-
-                            <label for="registerPassword">Password</label>
-                            <input role="textbox" type="password" name="pwd" id="registerPassword" required>
-
-                            <button role="button" type="submit" class="register-button">Register</button>
-
-                        </fieldset>
-                    </form>
-                </div>
-
-            </div>
-        </section>
-    </main>
-
-    <main class="about-page" role="main">
-        <header role="banner">
-            <div class="topnav">
-                <div class="nav-logo">
-                    <h2 class="logo-text">WhereIsIT</h2>
-                </div>
-                <div class="nav-list">
-                    <span class="username">Nitish</span>
-                    <span>|</span>
-                    <span><button class="logout-button">Logout</button></span>
-                </div>
-            </div>
-
-            <div class="sidenav">
-                <button class="about-button">About</button>
-                <button class="my-items-button">My Items</button>
-                <button class="my-places-button">My Places</button>
-                <button class="my-areas-button">My Areas</button>
-                <button class="categories-button">Cateogries</button>
-            </div>
-
+        <header class="title-container" role="banner">
+            <h1>AnyBuddy</h1>
+            <input type="hidden" id="loggedInUserId" value="">
         </header>
-        <section class="content-area">
-            <h1 class="entity-heading">About</h1>
-            <hr>
-            <section class="about-content">
-                <p> The second car key, the membership card of you favorite gift store and many such things which are important to you but you don't need them in your day to day life and so you decide to keep them somewhere safe. However, you can't find the location of 'somewhere' at the time of action and you say to yourself -WHERE IS IT? Sounds like you?</p>
-                <p> No problem, you are at the right place.</p>
-                <p> <span>My Areas :</span> Create an Area where you keep your hidden treasures :) . Example: Living Room.
-                </p>
-                <p> <span>My Places :</span> Now, I know its in the living room but where exactly? Create a place. Example: Wardrobe/Drawer one
-                </p>
-                <p> <span>My Items :</span> As it should be. Example: Second car key, Membership cards</p>
-                <p> <span>My Categories :</span> Wanna go traveling and scratching your head preparing a checklist? Create a Category. Example: Travel, Personal Care, Hardware Tools
-                </p>
 
-            </section>
-        </section>
-    </main>
+        <div class="info-screen">
+            <section class="info-text">
+                <p>Need a buddy to play chess? Want someone to accompany you on the beautiful but strenuous hike? Looking for someone to workout with in the Gym?</p>
+                <p>We get you.</p>
+                <p>AnyBuddy is user friendly and completely free app that lets you post activities and events for which you need a partner and allows others to join your activity. Register now and find the like minded buddies with one click.</p>
 
-    <main class="items-page" role="main">
-        <header role="banner">
-            <div class="topnav">
-                <div class="nav-logo">
-                    <h2 class="logo-text">WhereIsIT</h2>
-                </div>
-                <div class="nav-list">
-                    <span class="username">Nitish</span>
-                    <span>|</span>
-                    <span><button class="logout-button">Logout</button></span>
-                </div>
-            </div>
-            <div class="sidenav">
-                <button class="about-button">About</button>
-                <button class="my-items-button">My Items</button>
-                <button class="my-places-button">My Places</button>
-                <button class="my-areas-button">My Areas</button>
-                <button class="categories-button">Cateogries</button>
-            </div>
-        </header>
-        <section class="content-area">
-
-            <h1 class="entity-heading">Items</h1>
-            <hr>
-            <section class="items-content">
-                <div class="items-menu">
-                    <div class="items-menu-buttons">
-                        <button class="create-new-button">Create</button>
-                        <button class="show-all-button">Show All</button>
-                    </div>
-                    <form id="itemsLookupForm" role="search">
-                        <span>Find My</span>
-                        <input id="itemSearchField" type="text" name="searchfield" placeholder="keys" required>
-                        <button id="searchItem" role="button" type="submit">Search</button>
-                    </form>
-                    <p>*Use the search to move/delete an item</p>
-                </div>
-
-
-                <section class="items-result" aria-live="assertive">
-
-                    <div class="js-all-result-area">
-                        <table class="all-items-table">
-
-                        </table>
-                    </div>
-
-                    <div class="js-single-result-area">
-
-                        <div class="single-item-container">
-                        </div>
-                    </div>
-                </section>
+                <button role="button" id="logInButton">
+            Log In
+              </button>
+                <a href="#" class="register-link">
+                Don't have an account? Register
+            </a>
 
             </section>
 
-            <div class="js-item-popup-list">
+<section class="log-in-container">
+    <form class="login-form">
+        <h2 class="log-in-text">Log in</h2>
+        <fieldset name="user-info" class="user-info">
 
+            <label for="loginUserName">Username</label>
+            <input role="textbox" type="text" name="username" id="loginUserName" value="demouser" required>
 
-                <div class="create-item-popup all-forms-container" id="createItem">
-                    <form class="create-item-form all-forms">
-                        <h4>Create Item</h4>
-                        <fieldset name="item-info" class="item-info">
+            <label for="loginPassword">Password</label>
+            <input role="textbox" type="password" name="pwd" id="loginPassword" value="demopassword" required>
 
-                            <div class="name-select-container">
-                                <label for="item_name">Name</label>
-                                <input role="textbox" type="text" name="item_name" id="item_name" required>
-                            </div>
+            <button role="button" type="submit" class="log-in-button">Log In</button>
 
-                            <div class="area-select-container">
-                                <label for="create-area-selection">Area</label>
-                                <select id="create-area-selection" name="area-selection">
-                                <option value="0">Select..</option>
-                            </select>
-                            </div>
+        </fieldset>
+    </form>
+</section>
 
-                            <div class="place-select-container">
-                                <label for="create-place-selection">Place</label>
-                                <select id="create-place-selection" name="place-selection">
-                                <option value="0">Select..</option>
-                            </select>
-                            </div>
+<section class="register-container">
+    <form class="register-form">
+        <h2 class="register-text">Register</h2>
+        <fieldset name="user-info" class="user-info">
 
-                            <div class="category-select-container">
-                                <label for="create-category-selection">Category</label>
-                                <select id="create-category-selection" name="category-selection">
-                                <option value="0">Select..</option>
-                            </select>
-                            </div>
+            <label for="registerEmail">Email</label>
+            <input role="textbox" placeholder="foo@bar.com" type="email" name="email" id="registerEmail" required>
 
-                            <button role="button" type="submit" class="create-button">Create</button>
+            <label for="registerUserName">Username</label>
+            <input role="textbox" type="text" name="username" id="registerUserName" required>
 
-                        </fieldset>
-                    </form>
-                </div>
+            <label for="registerPassword">Password</label>
+            <input role="textbox" type="password" name="pwd" id="registerPassword" required>
 
-            </div>
-        </section>
+            <button role="button" type="submit" class="register-button">Register</button>
+
+        </fieldset>
+    </form>
+</section>
+        </div>
+
     </main>
-
-    <main class="places-page" role="main">
-        <header role="banner">
-            <div class="topnav">
-                <div class="nav-logo">
-                    <h2 class="logo-text">WhereIsIT</h2>
-                </div>
-                <div class="nav-list">
-                    <span class="username">Nitish</span>
-                    <span>|</span>
-                    <span><button class="logout-button">Logout</button></span>
-                </div>
-            </div>
-            <div class="sidenav">
-                <button class="about-button">About</button>
-                <button class="my-items-button">My Items</button>
-                <button class="my-places-button">My Places</button>
-                <button class="my-areas-button">My Areas</button>
-                <button class="categories-button">Cateogries</button>
-            </div>
-        </header>
-
-        <section class="content-area-places">
-
-            <h1 class="entity-heading">Places</h1>
-            <hr>
-            <section class="places-content">
-                <div class="places-menu">
-                    <div class="places-menu-buttons">
-                        <button class="create-new-button">Create</button>
-                        <button class="show-all-button">Show All</button>
-                    </div>
-                    <form id="placesLookupForm" role="search">
-                        <span>Find My</span>
-                        <input id="placeSearchField" type="text" name="searchfield" placeholder="Drawer" required>
-                        <button id="searchPlace" role="button" type="submit">Search</button>
-                    </form>
-                    <p> *Use the search to move/delete places</p>
-                </div>
-
-                <section class="places-result" aria-live="assertive">
-                    <div class="js-all-places-result">
-                        <h3>My places</h3>
-                        <ul class="places-list-all">
-                        </ul>
-
-                    </div>
-
-                    <div class="js-single-place-result">
-                        <h3>Here are the search results:</h3>
-                        <ul class="places-list-all">
-                        </ul>
-                    </div>
-                </section>
-
-            </section>
-
-            <div class="js-place-popup-list">
-
-                <div class="create-place-popup  all-forms-container">
-                    <form class="create-place-form all-forms">
-                        <h4>Create Place</h4>
-                        <fieldset name="place-info" class="place-info">
-
-                            <div class="name-select-container">
-                                <label for="place_name">Name</label>
-                                <input role="textbox" type="text" name="place_name" id="place_name" required>
-                            </div>
-
-                            <div class="area-select-container">
-                                <label for="place-create-area-selection">Area</label>
-                                <select id="place-create-area-selection" name="area-selection">
-                                    <option value="0">Select..</option>
-                                    <option value="1">Garage</option>
-                                    <option value="2">Bedroom</option>
-                                </select>
-                            </div>
-
-                            <button role="button" type="submit" class="create-button">Create</button>
-
-                        </fieldset>
-                    </form>
-                </div>
-
-            </div>
-
-        </section>
-    </main>
-
-    <main class="areas-page" role="main">
-        <header role="banner">
-            <div class="topnav">
-                <div class="nav-logo">
-                    <h2 class="logo-text">WhereIsIT</h2>
-                </div>
-                <div class="nav-list">
-                    <span class="username">Nitish</span>
-                    <span>|</span>
-                    <span><button class="logout-button">Logout</button></span>
-                </div>
-            </div>
-            <div class="sidenav">
-                <button class="about-button">About</button>
-                <button class="my-items-button">My Items</button>
-                <button class="my-places-button">My Places</button>
-                <button class="my-areas-button">My Areas</button>
-                <button class="categories-button">Cateogries</button>
-            </div>
-        </header>
-
-        <section class="content-area-areas">
-
-            <h1 class="entity-heading">Areas</h1>
-            <hr>
-            <section class="areas-content">
-                <div class="areas-menu">
-                    <div class="areas-menu-buttons">
-                        <button class="create-new-button">Create</button>
-                        <button class="show-all-button">Show All</button>
-                    </div>
-                </div>
-
-                <section class="areas-result" aria-live="assertive">
-                    <div class="js-all-areas-result">
-                        <h3>My Areas</h3>
-                        <ul class="areas-list-all">
-                        </ul>
-
-                    </div>
-
-                </section>
-
-            </section>
-
-            <div class="js-areas-popup-list">
-
-                <div class="create-area-popup all-forms-container">
-                    <form class="create-area-form all-forms">
-                        <h4>Create Area</h4>
-                        <fieldset name="area-info" class="area-info">
-
-                            <div class="name-select-container">
-                                <label for="area_name">Name</label>
-                                <input role="textbox" type="text" name="area_name" id="area_name" required>
-                            </div>
-
-                            <button role="button" type="submit" class="create-button">Create</button>
-
-                        </fieldset>
-                    </form>
-                </div>
-
-                <div class="delete-area-popup popup all-forms-container">
-                    <form class="delete-area-form all-forms" data-areaid="">
-
-                    </form>
-                </div>
-
-                <div class="show-places-popup popup">
-
-                    <h4>Showing Places - Bedroom</h4>
-                    <hr>
-                    <ul>
-                    </ul>
-
-                </div>
-
-            </div>
-
-        </section>
-    </main>
-
-    <main class="categories-page" role="main">
-
-        <header role="banner">
-            <div class="topnav">
-                <div class="nav-logo">
-                    <h2 class="logo-text">WhereIsIT</h2>
-                </div>
-                <div class="nav-list">
-                    <span class="username">Nitish</span>
-                    <span>|</span>
-                    <span><button class="logout-button">Logout</button></span>
-                </div>
-            </div>
-            <div class="sidenav">
-                <button class="about-button">About</button>
-                <button class="my-items-button">My Items</button>
-                <button class="my-places-button">My Places</button>
-                <button class="my-areas-button">My Areas</button>
-                <button class="categories-button">Cateogries</button>
-            </div>
-        </header>
-
-
-        <section class="content-area-categories">
-
-            <h1 class="entity-heading">Categories</h1>
-            <hr>
-            <section class="categories-content">
-                <div class="categories-menu">
-                    <div class="categories-menu-buttons">
-                        <button class="create-new-button">Create</button>
-                        <button class="show-all-button">Show All</button>
-                    </div>
-                </div>
-
-                <section class="categories-result" aria-live="assertive">
-                    <div class="js-all-categories-result">
-                        <h3>My Categories</h3>
-                        <ul class="categories-list-all">
-                        </ul>
-
-                    </div>
-
-                </section>
-
-            </section>
-
-            <div class="js-categories-popup-list">
-
-                <div class="create-category-popup all-forms-container">
-                    <form class="create-category-form all-forms">
-                        <h4>Create Category</h4>
-                        <fieldset name="category-info" class="category-info">
-
-                            <div class="name-select-container">
-                                <label for="category_name">Name</label>
-                                <input role="textbox" type="text" name="category_name" id="category_name" required>
-                            </div>
-
-                            <button role="button" type="submit" class="create-button">Create</button>
-
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-
-        </section>
-    </main>
-    <footer role="contentinfo">
-        <ul>
-            <li class="icon">
-                <a href="https://www.linkedin.com/in/nitishbagul/" target="blank">
-                    <i class="fab fa-linkedin"></i>
-                    <span class="block">linkedIn</span>
-                </a>
-            </li>
-            <li class="icon">
-                <a href="https://github.com/nitishbagul" target="blank">
-                    <i class="fab fa-github-square"></i>
-                    <span class="block">gitHub</span>
-                </a>
-            </li>
-            <li class="icon">
-                <a href="mailto:nitishbagul@gmail.com" target="blank">
-                    <i class="far fa-envelope"></i>
-                    <span class="block">contact</span>
-                </a>
-            </li>
-        </ul>
-    </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="client.js"></script>
 </body>
