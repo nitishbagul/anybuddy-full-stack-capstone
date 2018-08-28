@@ -23,6 +23,14 @@ html {
     height: 100%;
 }
 
+/*To be removed after wireframes*/
+
+main {
+    margin-bottom: 50px;
+}
+
+/*Welcome Page Style*/
+
 .welcome-page {
     background: url("https://hikeandcycle.com/wp-content/uploads/2017/07/hikingbuddys-800x533.jpg") no-repeat center center fixed;
     background-size: cover;
@@ -32,7 +40,7 @@ html {
 }
 
 
-h1 {
+.welcome-page h1 {
     padding: 10px;
     background: rgba(0, 0, 0, 0.30);
     color: white;
@@ -60,14 +68,15 @@ p {
 }
 
 button {
-    /*background-color: #4CAF50; */
-    background-color: #a3573e;
+    background-color: #89cf56;
+    padding-left: 2px;
+    padding-right: 2px;
     /* padding: 6px 8px 6px 8px; */
     height: 40px;
     width: 100px;
     border: none;
     border-radius: 6px;
-    /*color: black;*/
+    /* color: black; */
     color: white;
     text-align: center;
     text-decoration: none;
@@ -101,25 +110,9 @@ button {
     display: block;
 }
 
-/*
-.log-in-container,
-.register-container {
-    width: 100%;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 30px;
-    padding-bottom: 10px;
-    margin: auto;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border: 1px solid black;
-    background-color: white;
-    border-radius: 3px;
-}
-*/
-
 .login-form fieldset,
-.register-form fieldset {
+.register-form fieldset,
+.create-event-form fieldset {
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
@@ -129,7 +122,8 @@ button {
 }
 
 .login-form fieldset input,
-.register-form fieldset input {
+.register-form fieldset input,
+.create-event-form fieldset input {
     display: block;
     margin-bottom: 15px;
     width: 100%;
@@ -146,7 +140,8 @@ label {
 }
 
 .log-in-button,
-.register-button {
+.register-button,
+.create-event-button {
     margin-top: 15px;
     width: 100%;
     margin-bottom: 50px;
@@ -161,12 +156,175 @@ label {
 .login-form h2,
 .login-form h4,
 .register-form h2,
-.register-form h4 {
+.register-form h4,
+.create-event-form h2,
+.create-event-form h4 {
     margin: auto;
     text-align: center;
     font-size: 23px;
     font-weight: 200;
     color: black;
+}
+
+/*Menu Page Styles*/
+
+.menu-page {
+    background-color: #EBF7E3;
+}
+
+.my-events-page {
+    text-align: center;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #59992b;
+    line-height: 90px;
+    width: 100%;
+    padding: 5px;
+}
+
+.logo-text {
+    color: white;
+}
+
+.nav-logo {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: normal;
+    padding: 3px 5px;
+}
+
+.nav-list {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: normal;
+    padding: 3px 5px;
+    float: right;
+    margin-top: 19px;
+    margin-right: 10px;
+}
+
+.nav-logo h2 {
+    font-size: 26px;
+    color: #FEFEFE;
+    font-family: Tahoma, Geneva, sans-serif;
+    margin-left: 10px;
+}
+
+.nav-list button {
+    background-color: inherit;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    color: white;
+    font-size: 19px;
+    font-weight: 200;
+}
+
+.nav-list span {
+    color: #f2f2f2;
+    font-size: 20px;
+    display: inline-block;
+    padding: 5px 5px;
+}
+
+.subnav {
+    background-color: #9bd770;
+    text-align: center;
+    font-size: 0;
+}
+
+.subnav button {
+    display: inline-block;
+    background-color: #9bd770;
+    color: black;
+    height: 50px;
+    width: 50%;
+    margin: 0;
+    border-radius: 0;
+    font-size: 20px;
+}
+
+/**** Main Content Styles ****/
+
+.map,
+.events-list-container {
+    border: solid 1px #444;
+}
+
+
+.events-list-container {
+    width: 29.8%;
+    height: 1000px;
+    display: inline-block;
+}
+
+.map {
+    width: 69.7%;
+    height: 1000px;
+    display: inline-block;
+    /* margin-top: -2px; */
+    vertical-align: top;
+}
+
+.events-list {
+    border-bottom: solid 1px #444;
+    padding: 10px 0 10px 5px;
+    list-style: none;
+}
+
+.events-list li {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.events-list:hover,
+.reload:hover {
+    background-color: rgb(225, 225, 225);
+    cursor: pointer;
+}
+
+
+.filter-events-container {
+    display: inline-block;
+}
+
+.new-event-button {
+    width: 200px;
+    display: inline-block;
+}
+
+.my-events-list-container {
+    margin-top: 50px;
+}
+
+.single-event-display {
+    border: 2px solid grey;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    padding: 10px 10px;
+}
+
+.single-event-display h3 {
+    padding-bottom: 5px;
+}
+
+.single-event-display * {
+    margin-bottom: 5px;
+}
+
+.single-event-display p {
+    padding: 0;
+}
+
+.create-event-container {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
 }
 
 /*Media Queries*/
@@ -244,6 +402,42 @@ label {
         width: 90%;
     }
 
+    .create-event-container {
+        width: 80%;
+    }
+
+    .subnav button {
+        display: inline-block;
+        height: auto;
+        padding: 10px 15px;
+        width: 100%;
+        border-top: 1px solid brown;
+        border-bottom: brown;
+    }
+
+    .nav-logo,
+    .nav-list {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .nav-list {
+        float: none;
+        margin-right: -36px;
+    }
+
+    .logo-text {
+        font-size: 23px;
+    }
+
+    .nav-list span {
+        font-size: 17px;
+    }
+    .nav-list button {
+        font-size: 18px;
+    }
 
 }
 
@@ -251,9 +445,7 @@ label {
 
 @media only screen and (max-width: 320px) {
     .welcome-page {
-
-        height: 1050px;
-
+        height: 1988px;
     }
     .info-screen {
         width: 80%;

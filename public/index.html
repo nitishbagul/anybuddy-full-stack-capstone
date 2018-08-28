@@ -22,7 +22,7 @@
 
         <div class="info-screen">
             <section class="info-text">
-                <p>Need a buddy to play chess? Want someone to accompany you on the beautiful but strenuous hike? Looking for someone to workout with in the Gym?</p>
+                <p>Need a buddy to play chess? Want someone to accompany you on the beautiful but strenuous hike? Looking for someone to workout with in the gym?</p>
                 <p>We get you.</p>
                 <p>AnyBuddy is user friendly and completely free app that lets you post activities and events for which you need a partner and allows others to join your activity. Register now and find the like minded buddies with one click.</p>
 
@@ -35,44 +35,175 @@
 
             </section>
 
-<section class="log-in-container">
-    <form class="login-form">
-        <h2 class="log-in-text">Log in</h2>
-        <fieldset name="user-info" class="user-info">
+            <section class="log-in-container">
+                <form class="login-form">
+                    <h2 class="log-in-text">Log in</h2>
+                    <fieldset name="user-info" class="user-info">
 
-            <label for="loginUserName">Username</label>
-            <input role="textbox" type="text" name="username" id="loginUserName" value="demouser" required>
+                        <label for="loginUserName">Username</label>
+                        <input role="textbox" type="text" name="username" id="loginUserName" value="demouser" required>
 
-            <label for="loginPassword">Password</label>
-            <input role="textbox" type="password" name="pwd" id="loginPassword" value="demopassword" required>
+                        <label for="loginPassword">Password</label>
+                        <input role="textbox" type="password" name="pwd" id="loginPassword" value="demopassword" required>
 
-            <button role="button" type="submit" class="log-in-button">Log In</button>
+                        <button role="button" type="submit" class="log-in-button">Log In</button>
 
-        </fieldset>
-    </form>
-</section>
+                    </fieldset>
+                </form>
+            </section>
 
-<section class="register-container">
-    <form class="register-form">
-        <h2 class="register-text">Register</h2>
-        <fieldset name="user-info" class="user-info">
+            <section class="register-container">
+                <form class="register-form">
+                    <h2 class="register-text">Register</h2>
+                    <fieldset name="user-info" class="user-info">
 
-            <label for="registerEmail">Email</label>
-            <input role="textbox" placeholder="foo@bar.com" type="email" name="email" id="registerEmail" required>
+                        <label for="registerEmail">Email</label>
+                        <input role="textbox" placeholder="foo@bar.com" type="email" name="email" id="registerEmail" required>
 
-            <label for="registerUserName">Username</label>
-            <input role="textbox" type="text" name="username" id="registerUserName" required>
+                        <label for="registerUserName">Username</label>
+                        <input role="textbox" type="text" name="username" id="registerUserName" required>
 
-            <label for="registerPassword">Password</label>
-            <input role="textbox" type="password" name="pwd" id="registerPassword" required>
+                        <label for="registerPassword">Password</label>
+                        <input role="textbox" type="password" name="pwd" id="registerPassword" required>
 
-            <button role="button" type="submit" class="register-button">Register</button>
+                        <button role="button" type="submit" class="register-button">Register</button>
 
-        </fieldset>
-    </form>
-</section>
+                    </fieldset>
+                </form>
+            </section>
         </div>
 
+    </main>
+
+    <main class="menu-page" role="main">
+        <header role="banner">
+            <div class="topnav">
+                <div class="nav-logo">
+                    <h1 class="logo-text">AnyBuddy</h1>
+                </div>
+                <div class="nav-list">
+                    <span class="username">Nitish</span>
+                    <span>|</span>
+                    <span><button class="logout-button">Logout</button></span>
+                </div>
+            </div>
+
+            <div class="subnav">
+                <button class="about-button">EVENTS NEAR ME</button>
+                <button class="my-items-button">MY EVENTS</button>
+            </div>
+        </header>
+
+        <section class="nearby-events-page">
+            <div class="nearby-events-main-content">
+                <div class="map" id="map">
+                    <p>Map Area</p>
+                </div>
+                <div class="events-list-container">
+                    <ul class="events-list" id="listings">
+                        <li>
+                            <h3>Play Chess</h3>
+                            <h4>Aug 30, 2018 8PM</h4>
+                        </li>
+                        <li>
+                            <h3>Hiking</h3>
+                            <h4>Aug 30, 2018 10.40PM</h4>
+                        </li>
+                        <li>
+                            <h3>Python Pair Programming</h3>
+                            <h4>Aug 30, 2018 10.40PM</h4>
+                        </li>
+                        <li>
+                            <h3>Wall Climbing</h3>
+                            <h4>Aug 30, 2018 10.40PM</h4>
+                        </li>
+                        <li>
+                            <h3>Badminton</h3>
+                            <h4>Aug 30, 2018 10.40PM</h4>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-events-page">
+            <div class="my-events-main-content">
+                <h2>My Events</h2>
+                <p class="no-events-text">No events found.</p>
+                <div class="filter-events-container">
+                    <label for="event-type-selection">Filter Events</label>
+                    <select class="filter-events">
+                    <option value="0">Created By Me</option>
+                    <option value="1">Created By Others</option>
+                    <option value="2">All Events</option>
+                </select>
+                </div>
+                <button class="new-event-button">+ Create New</button>
+
+                <div class="create-event-container">
+                    <form class="create-event-form">
+                        <h2 class="event-details-text">Event Details</h2>
+                        <fieldset name="event-info" class="event-info">
+
+                            <label for="eventTitle">Event Title</label>
+                            <input role="textbox" type="text" name="title" id="eventTitle" value="Play Tennis" required>
+
+                            <label for="eventDate">Date</label>
+                            <input type="date" name="date" id="eventDate" value="" required>
+
+                            <label for="eventTime">Time</label>
+                            <input type="time" name="time" id="eventTime" value="" required>
+
+                            <label for="eventStreetAddress">Street Address</label>
+                            <input role="textbox" type="text" name="street" id="eventStreetAddress" value="" required>
+
+                            <label for="eventCity">City</label>
+                            <input role="textbox" type="text" name="city" id="eventCity" value="" required>
+
+                            <label for="eventState">State</label>
+                            <input role="textbox" type="text" name="state" id="eventState" value="" required>
+
+                            <label for="eventZipCode">Zip Code</label>
+                            <input role="textbox" type="number" name="zip" id="eventZipCode" value="" required>
+
+                            <label for="eventCountry">Country</label>
+                            <input role="textbox" type="text" name="country" id="eventCountry" value="" required>
+
+                        </fieldset>
+
+                        <h2 class="contact-details-text">Contact Details</h2>
+                        <fieldset name="contact-info" class="contact-info">
+
+                            <label for="contactName">Name</label>
+                            <input role="textbox" type="text" name="contactName" id="contactName" required>
+
+                            <label for="contactEmail">Email</label>
+                            <input role="textbox" placeholder="foo@bar.com" type="email" name="contactemail" id="contactEmail" required>
+
+                            <label for="contactNumber">Phone</label>
+                            <input role="textbox" type="tel" name="contactnumber" id="contactNumber" required>
+
+                        </fieldset>
+
+                        <button role="button" type="submit" class="create-event-button">Create</button>
+                    </form>
+                </div>
+
+                <div class="my-events-list-container">
+                    <div class="single-event-display">
+                        <h3>Game of Chess</h3>
+                        <h4>Date</h4>
+                        <p>Aug 30, 2018 10PM</p>
+                        <h4>Location</h4>
+                        <p>2147 Newhall Street, Santa Clara, CA-94085</p>
+                        <h4>Status</h4>
+                        <p>Pending approval</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="client.js"></script>
