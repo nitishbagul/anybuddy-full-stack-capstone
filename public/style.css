@@ -299,11 +299,13 @@ label {
     margin-top: 50px;
 }
 
-.single-event-display {
+.creator-single-event-display,
+.partner-single-event-display {
     border: 2px solid grey;
     width: 50%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px;
     padding: 10px 10px;
     background-color: #9BD770;
 }
@@ -312,18 +314,21 @@ label {
     text-align: left;
 }
 
-.single-event-display h3 {
+.creator-single-event-display h3,
+.partner-single-event-display h3 {
     padding-bottom: 5px;
     margin-top: 3px;
     font-size: 22px;
     color: darkslategrey;
 }
 
-.single-event-display * {
+.creator-single-event-display *,
+.partner-single-event-display * {
     margin-bottom: 5px;
 }
 
-.single-event-display p {
+.creator-single-event-display p,
+.partner-single-event-display p {
     padding: 0;
 }
 
@@ -465,12 +470,11 @@ label {
         width: 100%;
     }
 
-/*
+    /*
     .approval-buttons button {
         display: block;
     }
 */
-
     .event-update-buttons {
         float: none;
     }
