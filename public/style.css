@@ -168,7 +168,8 @@ label {
 
 /*Menu Page Styles*/
 
-.menu-page {
+.menu-page,
+body {
     background-color: #EBF7E3;
 }
 
@@ -277,6 +278,13 @@ label {
 .events-list li {
     margin-top: 5px;
     margin-bottom: 5px;
+    border-bottom: 1px solid black;
+}
+
+.events-list li * {
+    margin-top: 0px;
+    margin-bottom: 17px;
+    font-weight: 400;
 }
 
 .events-list:hover,
@@ -413,6 +421,41 @@ label {
     width: 80%;
     background-color: #afdf8c;
     color: #375F1B;
+}
+
+.event-content {
+    height: auto;
+    padding: 10px 10px;
+}
+
+/*Footer Styles*/
+
+footer {
+    background-color: #EBF7E3
+}
+
+footer ul {
+    width: 50%;
+    margin: 1rem auto;
+    text-align: center;
+}
+
+footer li {
+    display: inline-block;
+    width: auto;
+    color: #4a7f24;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+footer a {
+    color: #4a7f24;
+    font-size: 120%;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: grey;
 }
 
 /*Media Queries*/
