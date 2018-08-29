@@ -304,13 +304,19 @@ label {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
-    text-align: left;
     padding: 10px 10px;
+    background-color: #9BD770;
+}
+
+.single-event-info {
+    text-align: left;
 }
 
 .single-event-display h3 {
     padding-bottom: 5px;
     margin-top: 3px;
+    font-size: 22px;
+    color: darkslategrey;
 }
 
 .single-event-display * {
@@ -319,6 +325,14 @@ label {
 
 .single-event-display p {
     padding: 0;
+}
+
+.single-event-info h4 {
+    font-size: 18px;
+}
+
+.create-event-button {
+    background-color: #375F1B;
 }
 
 .create-event-container {
@@ -331,19 +345,27 @@ label {
 .create-event-form {
     border: 1px solid grey;
     padding: 5px 5px;
+    background-color: #9BD770;
 }
 
-.event-update-buttons {
+.event-update-buttons,
+.approval-buttons {
     vertical-align: middle;
     display: inline-block;
     line-height: normal;
     padding: 3px 5px;
     float: right;
     margin-right: 10px;
-    font-size: 18px;
+    font-size: 21px;
 }
 
-.event-update-buttons button {
+.approval-buttons {
+    float: none;
+    color: #375F1B;
+}
+
+.event-update-buttons button,
+.approval-buttons button {
     background-color: inherit;
     padding: 0;
     margin: 0;
@@ -352,6 +374,40 @@ label {
     font-weight: 200;
     height: auto;
     width: auto;
+}
+
+.collapse-button {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.collapsible {
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    background-color: #4a7f24;
+    color: white;
+}
+
+.collapse-content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #EBF7E3;
+}
+
+.contact-collapse {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+    background-color: #afdf8c;
+    color: #375F1B;
 }
 
 /*Media Queries*/
