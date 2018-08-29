@@ -310,6 +310,7 @@ label {
 
 .single-event-display h3 {
     padding-bottom: 5px;
+    margin-top: 3px;
 }
 
 .single-event-display * {
@@ -325,6 +326,32 @@ label {
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
+}
+
+.create-event-form {
+    border: 1px solid grey;
+    padding: 5px 5px;
+}
+
+.event-update-buttons {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: normal;
+    padding: 3px 5px;
+    float: right;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.event-update-buttons button {
+    background-color: inherit;
+    padding: 0;
+    margin: 0;
+    color: darkgreen;
+    font-size: 19px;
+    font-weight: 200;
+    height: auto;
+    width: auto;
 }
 
 /*Media Queries*/
