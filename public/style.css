@@ -456,6 +456,25 @@ label {
 
 @media only screen and (max-width: 480px) {
 
+    .single-event-display {
+        width: 90%;
+    }
+
+    .collapse-button,
+    .contact-collapse {
+        width: 100%;
+    }
+
+/*
+    .approval-buttons button {
+        display: block;
+    }
+*/
+
+    .event-update-buttons {
+        float: none;
+    }
+
     .info-screen {
         width: 75%;
     }
