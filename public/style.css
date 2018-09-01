@@ -112,7 +112,9 @@ button {
 
 .login-form fieldset,
 .register-form fieldset,
-.create-event-form fieldset {
+.create-event-form fieldset,
+.edit-event-form fieldset,
+.request-join-form fieldset {
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
@@ -123,7 +125,9 @@ button {
 
 .login-form fieldset input,
 .register-form fieldset input,
-.create-event-form fieldset input {
+.create-event-form fieldset input,
+.edit-event-form fieldset input,
+.request-join-form fieldset input {
     display: block;
     margin-bottom: 15px;
     width: 100%;
@@ -158,6 +162,7 @@ label {
 .register-form h2,
 .register-form h4,
 .create-event-form h2,
+.edit-event-form h2,
 .create-event-form h4 {
     margin: auto;
     text-align: center;
@@ -256,7 +261,7 @@ body {
 
 
 .events-list-container {
-    width: 29.8%;
+    width: 28.8%;
     height: 1000px;
     display: inline-block;
 }
@@ -285,12 +290,6 @@ body {
     margin-top: 0px;
     margin-bottom: 17px;
     font-weight: 400;
-}
-
-.events-list:hover,
-.reload:hover {
-    background-color: rgb(225, 225, 225);
-    cursor: pointer;
 }
 
 
@@ -340,25 +339,71 @@ body {
     padding: 0;
 }
 
-.single-event-info h4 {
+.filter-events {
     font-size: 18px;
 }
 
-.create-event-button {
+.filter-events-container-label {
+    font-size: 20px;
+    color: #4a7f24;
+}
+
+.delete-event-container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #4a7f24;
+    background-color: #EBF7E3;
+    border-radius: 5px;
+}
+
+.delete-event-container * {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.delete-event-button {
+    width: 30%;
+    background-color: #4a7f24;
+}
+
+element.style {
+    height: 30px;
+    width: 150px;
+}
+
+.create-event-button,
+.save-event-button {
     background-color: #375F1B;
 }
 
+.save-event-button {
+    width: 80%;
+}
+
 .create-event-container {
-    width: 60%;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
 }
 
-.create-event-form {
+.edit-event-container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+.create-event-form,
+.edit-event-form {
     border: 1px solid grey;
     padding: 5px 5px;
     background-color: #9BD770;
+}
+
+.edit-event-form {
+    border: none;
 }
 
 .event-update-buttons,
@@ -409,7 +454,7 @@ body {
 }
 
 .collapse-content {
-    padding: 0 18px;
+    padding: 0 5px;
     display: none;
     overflow: hidden;
     background-color: #EBF7E3;
@@ -426,6 +471,15 @@ body {
 .event-content {
     height: auto;
     padding: 10px 10px;
+}
+
+.event-joining p {
+    color: #375F1B
+}
+
+.request-joining-button {
+    width: 100%;
+    height: 55px;
 }
 
 /*Footer Styles*/
@@ -469,6 +523,32 @@ footer a:hover {
 
 @media only screen and (max-width: 768px) {
 
+    .map {
+        display: block;
+        width: 100%;
+    }
+
+    .events-list-container {
+        display: block;
+        width: 100%;
+    }
+
+    .filter-events-container {
+        display: block;
+    }
+
+    .new-event-button {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 30px;
+    }
+
+    .creator-single-event-display,
+    .partner-single-event-display {
+        width: 90%;
+    }
+
     .info-screen {
         background: rgba(255, 255, 255, 0.8);
         border-radius: 10px;
@@ -504,6 +584,10 @@ footer a:hover {
 
 @media only screen and (max-width: 480px) {
 
+    .delete-event-container {
+        width: 90%;
+    }
+
     .single-event-display {
         width: 90%;
     }
@@ -513,17 +597,12 @@ footer a:hover {
         width: 100%;
     }
 
-    /*
-    .approval-buttons button {
-        display: block;
-    }
-*/
     .event-update-buttons {
         float: none;
     }
 
     .info-screen {
-        width: 75%;
+        width: 90%;
     }
 
     #loginUserName,
@@ -551,8 +630,9 @@ footer a:hover {
         width: 90%;
     }
 
-    .create-event-container {
-        width: 80%;
+    .create-event-container,
+    .edit-event-container {
+        width: 90%;
     }
 
     .subnav button {
