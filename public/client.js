@@ -28,3 +28,37 @@ function executeCollapsible() {
 
 executeCollapsible();
 //Step 2: Use functions, objects and variables(Triggers)
+
+$(document).ready(function () {
+    $("#messageBox").hide();
+    $('main').hide();
+    $('.log-in-container').hide();
+    $('.register-container').hide();
+    //$(handleMenuButtonClicks);
+    $('.welcome-page').show();
+});
+
+//button triggers
+$(document).on('click', '#logInButton', function (event) {
+    event.preventDefault();
+    // displayError("hi");
+    $('main').hide();
+    $('.register-container').hide();
+    $('.features-container').hide();
+    $('.info-text').hide();
+    $('.log-in-container').show();
+    $('.welcome-page').show();
+});
+
+$(document).on('click', '.register-link', function (event) {
+    event.preventDefault();
+    // displayError("hi");
+    $('main').hide();
+    $('.log-in-container').hide();
+    $('.features-container').hide();
+    $('.info-text').hide();
+    $('.info-text').hide();
+    $('.register-link').hide();
+    $('.register-container').show();
+    $('.welcome-page').show();
+});

@@ -23,18 +23,14 @@ html {
     height: 100%;
 }
 
-/*To be removed after wireframes*/
 
-main {
-    margin-bottom: 50px;
-}
 
 /*Welcome Page Style*/
 
 .welcome-page {
     background: url("https://hikeandcycle.com/wp-content/uploads/2017/07/hikingbuddys-800x533.jpg") no-repeat center center fixed;
     background-size: cover;
-    height: 1700px;
+    height: 100%;
     width: unset;
     background-position: center;
 }
