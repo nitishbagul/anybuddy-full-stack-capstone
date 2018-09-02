@@ -23,6 +23,15 @@ html {
     height: 100%;
 }
 
+.clearfix {
+    overflow: auto;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
 
 
 /*Welcome Page Style*/
@@ -61,6 +70,9 @@ p {
     padding: 33px;
     text-align: left;
     float: right;
+    content: "";
+    clear: both;
+    display: table;
 }
 
 button {
@@ -188,6 +200,7 @@ body {
 
 .logo-text {
     color: white;
+    margin-left: 15px;
 }
 
 .nav-logo {
@@ -204,7 +217,6 @@ body {
     padding: 3px 5px;
     float: right;
     margin-top: 19px;
-    margin-right: 10px;
 }
 
 .nav-logo h2 {
@@ -533,6 +545,7 @@ footer a:hover {
 
     .filter-events-container {
         display: block;
+        margin-right: 0px;
     }
 
     .new-event-button {

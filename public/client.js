@@ -49,6 +49,11 @@ $(document).on('click', '#logInButton', function (event) {
     $('.welcome-page').show();
 });
 
+$(document).on('click', '.logout-button', function (event) {
+    location.reload();
+});
+
+
 $(document).on('click', '.register-link', function (event) {
     event.preventDefault();
     $('main').hide();
@@ -63,9 +68,105 @@ $(document).on('click', '.register-link', function (event) {
 
 $(document).on('click', '.log-in-button', function (event) {
     event.preventDefault();
-    $('main').hide();
-    $('.my-events-page').hide();
-    $('.menu-page').show();
+
+    //take the input from the user
+    const username = $("#loginUserName").val();
+    const password = $("#loginPassword").val();
+
+    //validate the input
+    if (username == "") {
+        displayError('Please input user name');
+    } else if (password == "") {
+        displayError('Please input password');
+    }
+    //if the input is valid
+    else {
+        //create the payload object (what data we send to the api call)
+        const loginUserObject = {
+            username: username,
+            password: password
+        };
+        //console.log(loginUserObject);
+
+        //make the api call using the payload above
+        $.ajax({
+                type: 'POST',
+                url: '/users/login',
+                dataType: 'json',
+                data: JSON.stringify(loginUserObject),
+                contentType: 'application/json'
+            })
+            //if call is succefull
+            .done(function (result) {
+                console.log(result);
+                $('main').hide();
+                $('.my-events-page').hide();
+                $('.menu-page').show();
+                $('.username').text(result.username);
+                $('#loggedInUserId').val(result._id);
+
+            })
+            //if the call is failing
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+                displayError('Incorrect Username or Password');
+            });
+    };
+});
+
+$(document).on('click', '.register-button', function (event) {
+    event.preventDefault();
+
+    //take the input from the user
+    const email = $("#registerEmail").val();
+    const username = $("#registerUserName").val();
+    const password = $("#registerPassword").val();
+
+    //validate the input
+    if (email == "") {
+        displayError('Please add an email');
+    } else if (username == "") {
+        displayError('Please add a user name');
+    } else if (password == "") {
+        displayError('Please add a password');
+    }
+    //if the input is valid
+    else {
+        //create the payload object (what data we send to the api call)
+        const newUserObject = {
+            email: email,
+            username: username,
+            password: password
+        };
+        console.log(newUserObject);
+
+        //make the api call using the payload above
+        $.ajax({
+                type: 'POST',
+                url: '/users/create',
+                dataType: 'json',
+                data: JSON.stringify(newUserObject),
+                contentType: 'application/json'
+            })
+            //if call is succefull
+            .done(function (result) {
+                console.log(result);
+                $('main').hide();
+                $('.my-events-page').hide();
+                $('.menu-page').show();
+                $('.username').text(result.username);
+                $('#loggedInUserId').val(result._id);
+            })
+            //if the call is failing
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+            });
+    };
+
 });
 
 $(document).on('click', '.my-events-button', function (event) {
