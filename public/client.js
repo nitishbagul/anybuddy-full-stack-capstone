@@ -41,7 +41,6 @@ $(document).ready(function () {
 //button triggers
 $(document).on('click', '#logInButton', function (event) {
     event.preventDefault();
-    // displayError("hi");
     $('main').hide();
     $('.register-container').hide();
     $('.features-container').hide();
@@ -52,7 +51,6 @@ $(document).on('click', '#logInButton', function (event) {
 
 $(document).on('click', '.register-link', function (event) {
     event.preventDefault();
-    // displayError("hi");
     $('main').hide();
     $('.log-in-container').hide();
     $('.features-container').hide();
@@ -61,4 +59,31 @@ $(document).on('click', '.register-link', function (event) {
     $('.register-link').hide();
     $('.register-container').show();
     $('.welcome-page').show();
+});
+
+$(document).on('click', '.log-in-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.my-events-page').hide();
+    $('.menu-page').show();
+});
+
+$(document).on('click', '.my-events-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.nearby-events-page').hide();
+    $('.create-event-container').hide();
+    $('.no-events-text').hide();
+    $('.edit-event-container').hide();
+    $('.delete-event-container').hide();
+    $('.my-events-page').show();
+    $('.menu-page').show();
+});
+
+$(document).on('click', '.nearby-events-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.my-events-page').hide();
+    $('.nearby-events-page').show();
+    $('.menu-page').show();
 });
