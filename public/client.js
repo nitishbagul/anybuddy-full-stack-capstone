@@ -13,8 +13,8 @@ function executeCollapsible() {
 
     for (i = 0; i < coll.length; i++) {
         coll[i].addEventListener("click", function () {
-            $('.popup').hide();
-            $('.all-forms-container').hide();
+            $('.event-joining p').show();
+            $('.event-joining .join-event-button').show();
             this.classList.toggle("active");
             var content = this.nextElementSibling;
             if (content.style.display === "block") {
@@ -66,7 +66,101 @@ $(document).on('click', '.register-link', function (event) {
     $('.welcome-page').show();
 });
 
-$(document).on('click', '.log-in-button', function (event) {
+
+$(document).on('click', '.my-events-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.nearby-events-page').hide();
+    $('.create-event-container').hide();
+    $('.no-events-text').hide();
+    $('.edit-event-container').hide();
+    $('.delete-event-container').hide();
+    $('.my-events-list-container').show();
+    $('.my-events-page').show();
+    $('.menu-page').show();
+});
+
+$(document).on('click', '.nearby-events-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.my-events-page').hide();
+    $('.nearby-events-page').show();
+    $('.menu-page').show();
+});
+
+$(document).on('click', '.event-content', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.my-events-page').hide();
+    $('.request-join-form').hide();
+    $('.nearby-events-page').show();
+    $('.menu-page').show();
+});
+
+$(document).on('click', '.join-event-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.my-events-page').hide();
+    $('.event-joining p').hide();
+    $('.event-joining .join-event-button').hide();
+    $('.request-join-form').show();
+    $('.nearby-events-page').show();
+    $('.menu-page').show();
+});
+
+$(document).on('click', '.new-event-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.nearby-events-page').hide();
+    $('.my-events-list-container').hide();
+    $('.create-event-container').show();
+    $('.my-events-page').show();
+    $('.menu-page').show();
+
+});
+
+$(document).on('click', '.edit-event-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.nearby-events-page').hide();
+    $('.create-event-container').hide();
+    $('.delete-event-container').hide();
+    $('.edit-event-container').show();
+    $('.my-events-list-container').show();
+    $('.my-events-page').show();
+    $('.menu-page').show();
+
+});
+
+$(document).on('click', '.delete-event-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.nearby-events-page').hide();
+    $('.create-event-container').hide();
+    $('.edit-event-container').hide();
+    $('.delete-event-container').show();
+    $('.my-events-list-container').show();
+    $('.my-events-page').show();
+    $('.menu-page').show();
+
+});
+
+$(document).on('click', '.delete-event-container .delete-event-button', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.nearby-events-page').hide();
+    $('.create-event-container').hide();
+    $('.edit-event-container').hide();
+    $('.delete-event-container').hide();
+    $('.my-events-list-container').show();
+    $('.my-events-page').show();
+    $('.menu-page').show();
+
+});
+
+//Form Triggers
+
+$('.login-form').submit(function (event) {
     event.preventDefault();
 
     //take the input from the user
@@ -116,7 +210,7 @@ $(document).on('click', '.log-in-button', function (event) {
     };
 });
 
-$(document).on('click', '.register-button', function (event) {
+$('.register-form').submit(function (event) {
     event.preventDefault();
 
     //take the input from the user
@@ -169,22 +263,33 @@ $(document).on('click', '.register-button', function (event) {
 
 });
 
-$(document).on('click', '.my-events-button', function (event) {
+$('.request-join-form').submit(function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('.my-events-page').hide();
+    $('.event-joining').hide();
+    $('.nearby-events-page').show();
+    $('.menu-page').show();
+});
+
+$('.create-event-form').submit(function (event) {
     event.preventDefault();
     $('main').hide();
     $('.nearby-events-page').hide();
-    $('.create-event-container').hide();
-    $('.no-events-text').hide();
-    $('.edit-event-container').hide();
-    $('.delete-event-container').hide();
+    $('.create-event-form').hide();
+    $('.my-events-list-container').show();
     $('.my-events-page').show();
     $('.menu-page').show();
 });
 
-$(document).on('click', '.nearby-events-button', function (event) {
+$('.edit-event-form').submit(function (event) {
     event.preventDefault();
     $('main').hide();
-    $('.my-events-page').hide();
-    $('.nearby-events-page').show();
+    $('.nearby-events-page').hide();
+    $('.create-event-container').hide();
+    $('.edit-event-container').hide();
+    $('.delete-event-container').hide();
+    $('.my-events-list-container').show();
+    $('.my-events-page').show();
     $('.menu-page').show();
 });

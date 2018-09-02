@@ -289,17 +289,15 @@ body {
 }
 
 .events-list li {
-    margin-top: 5px;
+    margin-top: 15px;
     margin-bottom: 5px;
     border-bottom: 1px solid black;
 }
 
 .events-list li * {
-    margin-top: 17px;
     margin-bottom: 17px;
     font-weight: 400;
 }
-
 
 .filter-events-container {
     display: inline-block;
