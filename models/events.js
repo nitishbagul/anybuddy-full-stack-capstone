@@ -1,0 +1,68 @@
+"use strict";
+
+const mongoose = require('mongoose');
+
+const eventsSchema = new mongoose.Schema({
+    ownerId: {
+        type: String,
+        required: false
+    },
+    ownerName: {
+        type: String,
+        required: false
+    },
+    ownerEmail: {
+        type: String,
+        required: false
+    },
+    ownerPhone: {
+        type: String,
+        required: false
+    },
+    eventTitle: {
+        type: String,
+        required: false
+    },
+    eventDate: {
+        type: Date,
+        required: false
+    },
+    eventTime: {
+        type: String,
+        required: false
+    },
+    eventStreetAddress: {
+        type: String,
+        required: false
+    },
+    eventCity: {
+        type: String,
+        required: false
+    },
+    eventState: {
+        type: String,
+        required: false
+    },
+    eventZipcode: {
+        type: String,
+        required: false
+    },
+    eventCountry: {
+        type: String,
+        required: false
+    },
+    creationDate: {
+        type: Date,
+        required: false
+    },
+    partners: [{
+        partnerName: String,
+        partnerEmail: String,
+        partnerPhone: Number,
+        required: false
+    }]
+});
+
+const Events = mongoose.model('Events', eventsSchema);
+
+module.exports = Events;

@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDY5Mo1gHwOkP3SgAVQwrlCOP_lVVvtJDg&libraries=places&callback=initAutocomplete" async defer></script>-->
 </head>
 
 <body>
@@ -179,25 +180,25 @@
                             <input role="textbox" type="text" name="title" id="eventTitle" value="Play Tennis" required>
 
                             <label for="eventDate">Date</label>
-                            <input type="date" name="date" id="eventDate" value="" required>
+                            <input type="date" name="date" id="eventDate" value="09/19/2018" required>
 
                             <label for="eventTime">Time</label>
-                            <input type="time" name="time" id="eventTime" value="" required>
+                            <input type="time" name="time" id="eventTime" value="14:00:00" required>
 
                             <label for="eventStreetAddress">Street Address</label>
-                            <input role="textbox" type="text" name="street" id="eventStreetAddress" value="" required>
+                            <input role="textbox" type="text" name="street" id="eventStreetAddress" class="autocomplete street_number route" value="2147 Newhall Street" onFocus="geolocate()" required>
 
                             <label for="eventCity">City</label>
-                            <input role="textbox" type="text" name="city" id="eventCity" value="" required>
+                            <input role="textbox" type="text" name="city" id="eventCity" class="locality" value="Santa Clara" required>
 
                             <label for="eventState">State</label>
-                            <input role="textbox" type="text" name="state" id="eventState" value="" required>
+                            <input role="textbox" type="text" name="state" id="eventState" class="administrative_area_level_1" value="California" required>
 
                             <label for="eventZipCode">Zip Code</label>
-                            <input role="textbox" type="number" name="zip" id="eventZipCode" value="" required>
+                            <input role="textbox" type="number" name="zip" id="eventZipCode" class="postal_code" value="95050" required>
 
                             <label for="eventCountry">Country</label>
-                            <input role="textbox" type="text" name="country" id="eventCountry" value="" required>
+                            <input role="textbox" type="text" name="country" id="eventCountry" class="country" value="United States" required>
 
                         </fieldset>
 
@@ -205,13 +206,13 @@
                         <fieldset name="contact-info" class="contact-info">
 
                             <label for="contactName">Name</label>
-                            <input role="textbox" type="text" name="contactName" id="contactName" required>
+                            <input role="textbox" type="text" name="contactName" id="contactName" value="John Snow" required>
 
                             <label for="contactEmail">Email</label>
-                            <input role="textbox" placeholder="foo@bar.com" type="email" name="contactemail" id="contactEmail" required>
+                            <input role="textbox" placeholder="foo@bar.com" type="email" name="contactemail" id="contactEmail" value="jsnow@gmail.com" required>
 
                             <label for="contactNumber">Phone</label>
-                            <input role="textbox" type="tel" name="contactnumber" id="contactNumber" required>
+                            <input role="textbox" type="tel" name="contactnumber" id="contactNumber" value="667-787-8876" required>
 
                         </fieldset>
 
@@ -272,20 +273,21 @@
                                     <label for="eventTime">Time</label>
                                     <input type="time" name="time" id="editEventTime" value="" required="">
 
-                                    <label for="eventStreetAddress">Street Address</label>
-                                    <input role="textbox" type="text" name="street" id="editEventStreetAddress" value="" required="">
+                                    <!--
+<label for="eventStreetAddress">Street Address</label>
+<input role="textbox" type="text" name="street" id="editEventStreetAddress" value="" required="">
 
-                                    <label for="eventCity">City</label>
-                                    <input role="textbox" type="text" name="city" id="editEventCity" value="" required="">
+<label for="eventCity">City</label>
+<input role="textbox" type="text" name="city" id="editEventCity" value="" required="">
 
-                                    <label for="eventState">State</label>
-                                    <input role="textbox" type="text" name="state" id="editEventState" value="" required="">
+<label for="eventState">State</label>
+<input role="textbox" type="text" name="state" id="editEventState" value="" required="">
 
-                                    <label for="eventZipCode">Zip Code</label>
-                                    <input role="textbox" type="number" name="zip" id="editEventZipCode" value="" required="">
+<label for="eventZipCode">Zip Code</label>
+<input role="textbox" type="number" name="zip" id="editEventZipCode" value="" required="">
 
-                                    <label for="eventCountry">Country</label>
-                                    <input role="textbox" type="text" name="country" id="editEventCountry" value="" required="">
+<label for="eventCountry">Country</label>
+<input role="textbox" type="text" name="country" id="editEventCountry" value="" required="">-->
 
                                 </fieldset>
 
@@ -361,7 +363,10 @@
         </ul>
     </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDY5Mo1gHwOkP3SgAVQwrlCOP_lVVvtJDg&libraries=places&callback=initAutocomplete"></script>-->
     <script src="client.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDY5Mo1gHwOkP3SgAVQwrlCOP_lVVvtJDg&libraries=places&callback=initAutocomplete" async defer></script>
+
 </body>
 
 </html>

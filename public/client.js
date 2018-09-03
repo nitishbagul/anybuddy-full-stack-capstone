@@ -26,11 +26,83 @@ function executeCollapsible() {
     }
 }
 
-executeCollapsible();
+
+//Use Autocomplete to fill address
+
+var placeSearch, autocomplete;
+var componentForm = {
+    street_number: 'short_name',
+    route: 'long_name',
+    locality: 'long_name',
+    administrative_area_level_1: 'short_name',
+    country: 'long_name',
+    postal_code: 'short_name'
+};
+
+function initAutocomplete() {
+    console.log("hi");
+    // Create the autocomplete object, restricting the search to geographical
+    // location types.
+    autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */
+        (document.getElementsByClassName('autocomplete')[0]), {
+            types: ['geocode']
+        });
+
+    // When the user selects an address from the dropdown, populate the address
+    // fields in the form.
+    autocomplete.addListener('place_changed', fillInAddress);
+}
+
+function fillInAddress() {
+    // Get the place details from the autocomplete object.
+    var place = autocomplete.getPlace();
+
+    for (var component in componentForm) {
+        console.log(document.getElementsByClassName(component));
+        // console.log(document.getElementsByClassName(component)[0]);
+        document.getElementsByClassName(component).value = '';
+        document.getElementsByClassName(component).disabled = false;
+    }
+
+    // Get each component of the address from the place details
+    // and fill the corresponding field on the form.
+    for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            document.getElementsByClassName(addressType)[0].value = val;
+        }
+        document.getElementById('eventStreetAddress').value =
+            place.address_components[0]['long_name'] + ' ' +
+            place.address_components[1]['long_name'];
+    }
+}
+
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var geolocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+                center: geolocation,
+                radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+        });
+    }
+}
+
+
 //Step 2: Use functions, objects and variables(Triggers)
 
 $(document).ready(function () {
-    $("#messageBox").hide();
+    executeCollapsible();
+    //    useAutoComplete();    $("#messageBox").hide();
     $('main').hide();
     $('.log-in-container').hide();
     $('.register-container').hide();
@@ -272,14 +344,98 @@ $('.request-join-form').submit(function (event) {
     $('.menu-page').show();
 });
 
+//$('.create-event-form').submit(function (event) {
+//    event.preventDefault();
+//    $('main').hide();
+//    $('.nearby-events-page').hide();
+//    $('.create-event-form').hide();
+//    $('.my-events-list-container').show();
+//    $('.my-events-page').show();
+//    $('.menu-page').show();
+//});
+
 $('.create-event-form').submit(function (event) {
     event.preventDefault();
-    $('main').hide();
-    $('.nearby-events-page').hide();
-    $('.create-event-form').hide();
-    $('.my-events-list-container').show();
-    $('.my-events-page').show();
-    $('.menu-page').show();
+    //take the input from the user
+    const ownerId = $('#loggedInUserId').val();
+    const ownerName = $("#contactName").val();
+    const ownerEmail = $("#contactEmail").val();
+    const ownerPhone = $("#contactNumber").val();
+    const eventTitle = $("#eventTitle").val();
+    const eventDate = $("#eventDate").val();
+    const eventTime = $("#eventTime").val();
+    const eventStreetAddress = $("#eventStreetAddress").val();
+    const eventCity = $("#eventCity").val();
+    const eventState = $("#eventState").val();
+    const eventZipcode = $("#eventZipCode").val();
+    const eventCountry = $("#eventCountry").val();
+    const creationDate = new Date();
+
+    //validate the input
+    if (eventTitle == "") {
+        displayError('Please add an item');
+    }
+    //    else if (areaName == "Select.." || areaName == undefined || areaName == "") {
+    //        displayError('Please add an Area');
+    //    } else if (placeName == "Select.." || placeName == undefined || placeName == "") {
+    //        displayError('Please add a Place');
+    //    } else if (categoryName == "Select.." || categoryName == undefined || categoryName == "") {
+    //        displayError('Please add a Category');
+    //    }
+    //if the input is valid
+    else {
+        //create the payload object (what data we send to the api call)
+        const newEventObject = {
+            ownerId: ownerId,
+            ownerName: ownerName,
+            ownerEmail: ownerEmail,
+            ownerPhone: ownerPhone,
+            eventTitle: eventTitle,
+            eventDate: eventDate,
+            eventTime: eventTime,
+            eventStreetAddress: eventStreetAddress,
+            eventCity: eventCity,
+            eventState: eventState,
+            eventZipcode: eventZipcode,
+            eventCountry: eventCountry
+        };
+        //console.log(newItemObject);
+
+        //make the api call using the payload above
+        $.ajax({
+                type: 'POST',
+                url: '/events/create',
+                dataType: 'json',
+                data: JSON.stringify(newEventObject),
+                contentType: 'application/json'
+            })
+            //if call is succefull
+            .done(function (result) {
+                console.log(result);
+                $("#eventTitle").val("");
+                $("#eventDate").val("");
+                $("#eventTime").val("");
+                $("#eventStreetAddress").val("");
+                $("#eventCity").val("");
+                $("#eventState").val("");
+                $("#eventZipCode").val("");
+                $("#eventCountry").val("");
+                $("#contactName").val("");
+                $("#contactEmail").val("");
+                $("#contactNumber").val("");
+
+                $('.create-event-container').hide();
+                $('.my-events-list-container').show();
+                displayError("Event created succesfully");
+            })
+            //if the call is failing
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+            });
+    };
+
 });
 
 $('.edit-event-form').submit(function (event) {
