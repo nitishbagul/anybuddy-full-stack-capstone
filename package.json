@@ -4,6 +4,7 @@
     "description": "Anybuddy lets you create events and helps you find like minded buddies",
     "main": "server.js",
     "dependencies": {
+        "@google/maps": "^0.5.5",
         "bcrypt": "^3.0.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.18.3",

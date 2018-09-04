@@ -55,6 +55,14 @@ const eventsSchema = new mongoose.Schema({
         type: Date,
         required: false
     },
+    lat: {
+        type: Number,
+        required: false
+    },
+    lng: {
+        type: Number,
+        required: false
+    },
     partners: [{
         partnerName: String,
         partnerEmail: String,

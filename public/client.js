@@ -40,7 +40,6 @@ var componentForm = {
 };
 
 function initAutocomplete() {
-    console.log("hi");
     // Create the autocomplete object, restricting the search to geographical
     // location types.
     autocomplete = new google.maps.places.Autocomplete(
@@ -97,6 +96,57 @@ function geolocate() {
     }
 }
 
+
+//Google Geocoding API
+//function getLatLong() {
+//    $.ajax({
+//            /* update API end point */
+//            url: "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDY5Mo1gHwOkP3SgAVQwrlCOP_lVVvtJDg&callback=?",
+//            dataType: "jsonp",
+//            /*set the call type GET / POST*/
+//            type: "GET"
+//        })
+//        /* if the call is successful (status 200 OK) show results */
+//        .done(function (result) {
+//            /* if the results are meeningful, we can just console.log them */
+//            console.log(result);
+//            //Show the error message if no results found
+//            if (result.count == 0) {
+//                console.log("no result");
+//            } else {
+//                console.log("success");
+//            }
+//        })
+//        /* if the call is NOT successful show errors */
+//        .fail(function (jqXHR, error, errorThrown) {
+//            console.log(jqXHR);
+//            console.log(error);
+//            console.log(errorThrown);
+//        });
+//}
+
+function getLatLong(address) {
+    return new Promise((resolve) => {
+        axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+                params: {
+                    address: address,
+                    key: 'AIzaSyDY5Mo1gHwOkP3SgAVQwrlCOP_lVVvtJDg'
+                }
+            })
+            .then(function (response) {
+                console.log(response);
+                console.log(response.data.results[0].geometry.location.lat);
+                let latLong = [response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng];
+                resolve(latLong);
+
+            })
+            .catch(function (error) {
+                console.log(error);
+                resolve();
+            });
+    })
+
+}
 
 //Step 2: Use functions, objects and variables(Triggers)
 
@@ -384,25 +434,34 @@ $('.create-event-form').submit(function (event) {
     //    }
     //if the input is valid
     else {
-        //create the payload object (what data we send to the api call)
-        const newEventObject = {
-            ownerId: ownerId,
-            ownerName: ownerName,
-            ownerEmail: ownerEmail,
-            ownerPhone: ownerPhone,
-            eventTitle: eventTitle,
-            eventDate: eventDate,
-            eventTime: eventTime,
-            eventStreetAddress: eventStreetAddress,
-            eventCity: eventCity,
-            eventState: eventState,
-            eventZipcode: eventZipcode,
-            eventCountry: eventCountry
-        };
-        //console.log(newItemObject);
+        let lat,lng;
+        let adddressString = `${eventStreetAddress} ${eventCity} ${eventState}`;
+        getLatLong(adddressString).then((result) => {
+            console.log(result);
+            lat = result[0];
+            lng = result[1];
 
-        //make the api call using the payload above
-        $.ajax({
+            //create the payload object (what data we send to the api call)
+            const newEventObject = {
+                ownerId: ownerId,
+                ownerName: ownerName,
+                ownerEmail: ownerEmail,
+                ownerPhone: ownerPhone,
+                eventTitle: eventTitle,
+                eventDate: eventDate,
+                eventTime: eventTime,
+                eventStreetAddress: eventStreetAddress,
+                eventCity: eventCity,
+                eventState: eventState,
+                eventZipcode: eventZipcode,
+                eventCountry: eventCountry,
+                lat: lat,
+                lng: lng
+            };
+            //console.log(newItemObject);
+
+            //make the api call using the payload above
+            $.ajax({
                 type: 'POST',
                 url: '/events/create',
                 dataType: 'json',
@@ -410,7 +469,7 @@ $('.create-event-form').submit(function (event) {
                 contentType: 'application/json'
             })
             //if call is succefull
-            .done(function (result) {
+                .done(function (result) {
                 console.log(result);
                 $("#eventTitle").val("");
                 $("#eventDate").val("");
@@ -429,11 +488,12 @@ $('.create-event-form').submit(function (event) {
                 displayError("Event created succesfully");
             })
             //if the call is failing
-            .fail(function (jqXHR, error, errorThrown) {
+                .fail(function (jqXHR, error, errorThrown) {
                 console.log(jqXHR);
                 console.log(error);
                 console.log(errorThrown);
             });
+        });
     };
 
 });

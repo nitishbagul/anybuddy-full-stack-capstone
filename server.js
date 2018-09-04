@@ -192,6 +192,8 @@ app.post('/events/create', (req, res) => {
     let eventState = req.body.eventState;
     let eventZipCode = req.body.eventZipCode;
     let eventCountry = req.body.eventCountry;
+    let lat = req.body.lat;
+    let lng = req.body.lng;
     let creationDate = new Date();
 
     Events.create({
@@ -208,6 +210,8 @@ app.post('/events/create', (req, res) => {
         eventState,
         eventZipCode,
         eventCountry,
+        lat,
+        lng,
         creationDate
     }, (err, event) => {
         if (err) {
