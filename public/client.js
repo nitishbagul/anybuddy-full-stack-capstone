@@ -97,34 +97,6 @@ function geolocate() {
 }
 
 
-//Google Geocoding API
-//function getLatLong() {
-//    $.ajax({
-//            /* update API end point */
-//            url: "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDY5Mo1gHwOkP3SgAVQwrlCOP_lVVvtJDg&callback=?",
-//            dataType: "jsonp",
-//            /*set the call type GET / POST*/
-//            type: "GET"
-//        })
-//        /* if the call is successful (status 200 OK) show results */
-//        .done(function (result) {
-//            /* if the results are meeningful, we can just console.log them */
-//            console.log(result);
-//            //Show the error message if no results found
-//            if (result.count == 0) {
-//                console.log("no result");
-//            } else {
-//                console.log("success");
-//            }
-//        })
-//        /* if the call is NOT successful show errors */
-//        .fail(function (jqXHR, error, errorThrown) {
-//            console.log(jqXHR);
-//            console.log(error);
-//            console.log(errorThrown);
-//        });
-//}
-
 function getLatLong(address) {
     return new Promise((resolve) => {
         axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
@@ -146,6 +118,59 @@ function getLatLong(address) {
             });
     })
 
+}
+
+//function getUserLatLong() {
+//    let userLat, userLng;
+//    if (navigator.geolocation) {
+//        let userLatLng = navigator.geolocation.getCurrentPosition(showPosition);
+//        console.log(userLatLng);
+//        return userLatLng;
+//    } else {
+//        alert("Geolocation is not supported by this browser.");
+//    }
+//
+//    function showPosition(position) {
+//        userLat = position.coords.latitude;
+//        userLng = position.coords.longitude;
+//        return [userLat, userLng];
+//    }
+//}
+
+function getUserLatLong() {
+    let userLat, userLng;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+
+    function showPosition(position) {
+        userLat = position.coords.latitude;
+        userLng = position.coords.longitude;
+        showEventsNearUser(userLat, userLng);
+    }
+}
+
+function showEventsNearUser(userLat, userLng) {
+    console.log(userLat, userLng);
+    //make the api call to get all events
+    $.ajax({
+            type: 'GET',
+            url: '/events/get/' + userLat + '/' + userLng,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            console.log(result);
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
 }
 
 //Step 2: Use functions, objects and variables(Triggers)
@@ -317,6 +342,7 @@ $('.login-form').submit(function (event) {
                 console.log(result);
                 $('main').hide();
                 $('.my-events-page').hide();
+                getUserLatLong();
                 $('.menu-page').show();
                 $('.username').text(result.username);
                 $('#loggedInUserId').val(result._id);
@@ -434,7 +460,7 @@ $('.create-event-form').submit(function (event) {
     //    }
     //if the input is valid
     else {
-        let lat,lng;
+        let lat, lng;
         let adddressString = `${eventStreetAddress} ${eventCity} ${eventState}`;
         getLatLong(adddressString).then((result) => {
             console.log(result);
@@ -462,37 +488,37 @@ $('.create-event-form').submit(function (event) {
 
             //make the api call using the payload above
             $.ajax({
-                type: 'POST',
-                url: '/events/create',
-                dataType: 'json',
-                data: JSON.stringify(newEventObject),
-                contentType: 'application/json'
-            })
-            //if call is succefull
+                    type: 'POST',
+                    url: '/events/create',
+                    dataType: 'json',
+                    data: JSON.stringify(newEventObject),
+                    contentType: 'application/json'
+                })
+                //if call is succefull
                 .done(function (result) {
-                console.log(result);
-                $("#eventTitle").val("");
-                $("#eventDate").val("");
-                $("#eventTime").val("");
-                $("#eventStreetAddress").val("");
-                $("#eventCity").val("");
-                $("#eventState").val("");
-                $("#eventZipCode").val("");
-                $("#eventCountry").val("");
-                $("#contactName").val("");
-                $("#contactEmail").val("");
-                $("#contactNumber").val("");
+                    console.log(result);
+                    $("#eventTitle").val("");
+                    $("#eventDate").val("");
+                    $("#eventTime").val("");
+                    $("#eventStreetAddress").val("");
+                    $("#eventCity").val("");
+                    $("#eventState").val("");
+                    $("#eventZipCode").val("");
+                    $("#eventCountry").val("");
+                    $("#contactName").val("");
+                    $("#contactEmail").val("");
+                    $("#contactNumber").val("");
 
-                $('.create-event-container').hide();
-                $('.my-events-list-container').show();
-                displayError("Event created succesfully");
-            })
-            //if the call is failing
+                    $('.create-event-container').hide();
+                    $('.my-events-list-container').show();
+                    displayError("Event created succesfully");
+                })
+                //if the call is failing
                 .fail(function (jqXHR, error, errorThrown) {
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
-            });
+                    console.log(jqXHR);
+                    console.log(error);
+                    console.log(errorThrown);
+                });
         });
     };
 

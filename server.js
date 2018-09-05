@@ -311,20 +311,36 @@ app.get('/items/:user', function (req, res) {
         });
 });
 
-//all items by userID
-app.get('/items/get/all/:id', function (req, res) {
+//all Events by Lat-Long
+app.get('/events/get/:userLat/:userLng', function (req, res) {
+    let userLatitude = parseFloat((req.params.userLat)).toFixed(7);
+    let userLongitude = parseFloat((req.params.userLng)).toFixed(7);
+    console.log(userLatitude, userLongitude);
+    console.log(typeof userLatitude, typeof userLongitude);
 
-    Items
-        .find()
-        .then(function (items) {
-            let itemsOutput = [];
-            items.map(function (item) {
-                if (item.loggedInUserId == req.params.id) {
-                    itemsOutput.push(item);
-                }
-            });
+    Events
+        .find({
+            lat: {
+
+                $gt: parseFloat(userLatitude) - 0.30,
+                $lt: parseFloat(userLatitude) + 0.30
+
+            },
+            lng: {
+                $gt: parseFloat(userLongitude) - 0.30,
+                $lt: parseFloat(userLongitude) + 0.30
+            }
+        })
+        .then(function (events) {
+            console.log(events);
+            //            let eventsOutput = [];
+            //            items.map(function (item) {
+            //                if (item.loggedInUserId == req.params.id) {
+            //                    itemsOutput.push(item);
+            //                }
+            //            });
             res.json({
-                itemsOutput
+                events
             });
         })
         .catch(function (err) {
