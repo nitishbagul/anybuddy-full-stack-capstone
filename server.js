@@ -194,6 +194,7 @@ app.post('/events/create', (req, res) => {
     let eventCountry = req.body.eventCountry;
     let lat = req.body.lat;
     let lng = req.body.lng;
+    let partnersRequired = req.body.partnersRequired;
     let creationDate = new Date();
 
     Events.create({
@@ -212,6 +213,7 @@ app.post('/events/create', (req, res) => {
         eventCountry,
         lat,
         lng,
+        partnersRequired,
         creationDate
     }, (err, event) => {
         if (err) {
@@ -238,7 +240,7 @@ app.put('/event/:id', (req, res) => {
     }
 
     const toUpdate = {};
-    const updateableFields = ['eventTitle', 'eventDate', 'eventTime'];
+    const updateableFields = ['eventTitle', 'eventDate', 'eventTime', 'partnersRequired', 'partners'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {

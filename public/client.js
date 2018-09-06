@@ -120,23 +120,6 @@ function getLatLong(address) {
 
 }
 
-//function getUserLatLong() {
-//    let userLat, userLng;
-//    if (navigator.geolocation) {
-//        let userLatLng = navigator.geolocation.getCurrentPosition(showPosition);
-//        console.log(userLatLng);
-//        return userLatLng;
-//    } else {
-//        alert("Geolocation is not supported by this browser.");
-//    }
-//
-//    function showPosition(position) {
-//        userLat = position.coords.latitude;
-//        userLng = position.coords.longitude;
-//        return [userLat, userLng];
-//    }
-//}
-
 function getUserLatLong() {
     let userLat, userLng;
     if (navigator.geolocation) {
@@ -154,7 +137,7 @@ function getUserLatLong() {
 
 function showEventsNearUser(userLat, userLng) {
     console.log(userLat, userLng);
-    //make the api call to get all events
+    //make the api call to get all events based on GPS
     $.ajax({
             type: 'GET',
             url: '/events/get/' + userLat + '/' + userLng,
@@ -164,6 +147,54 @@ function showEventsNearUser(userLat, userLng) {
         //if call is succefull
         .done(function (result) {
             console.log(result);
+            if (result.events.length === 0) {
+                displayError("No places found, please refine the search.")
+            } else {
+                let buildTheHtmlOutput = "";
+
+                $.each(result.events, function (resultKey, resultValue) {
+                    buildTheHtmlOutput += `<li data-eventid=${resultValue._id}>`;
+                    buildTheHtmlOutput += `<div class="event-content collapsible">
+<h3 class="event-header">${resultValue.eventTitle}</h3>
+<h4 class="event-date">${resultValue.eventDate.slice(0,10)}, ${resultValue.eventTime}</h4>
+<h5 class="event-address">${resultValue.eventStreetAddress}, ${resultValue.eventCity}</h5>
+</div>`;
+                    buildTheHtmlOutput += `<div class="event-joining collapse-content">
+<p>Partners Required: <span class="required-partners">${resultValue.partnersRequired}</span></p>
+<button class="join-event-button">Join Event</button>
+<div class="request-join-details">
+<form class="request-join-form" data-eventid=${resultValue._id}>
+<fieldset name="contact-info" class="contact-info">
+
+<label for="contactName">Name</label>
+<input role="textbox" type="text" name="contactName" class="partnerName" required>
+
+<label for="contactEmail">Email</label>
+<input role="textbox" placeholder="foo@bar.com" type="email" name="contactemail" class="partnerEmail" required>
+
+<label for="contactNumber">Phone</label>
+<input role="textbox" type="tel" name="contactnumber" class="partnerPhone" required>
+
+<button role="button" type="submit" class="request-joining-button">Join</button>
+
+</fieldset>
+
+</form>
+</div>
+</div>`;
+                    buildTheHtmlOutput += `</li>`;
+                    //console.log(buildTheHtmlOutput);
+
+                    //use the HTML output to show it in all items table
+                    $(`.nearby-events-page .events-list`).html(buildTheHtmlOutput);
+                    executeCollapsible();
+                    $('.menu-page').show();
+                    $('.username').text(result.username);
+                    $('#loggedInUserId').val(result._id);
+                })
+
+            }
+
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -343,9 +374,6 @@ $('.login-form').submit(function (event) {
                 $('main').hide();
                 $('.my-events-page').hide();
                 getUserLatLong();
-                $('.menu-page').show();
-                $('.username').text(result.username);
-                $('#loggedInUserId').val(result._id);
 
             })
             //if the call is failing
@@ -445,11 +473,12 @@ $('.create-event-form').submit(function (event) {
     const eventState = $("#eventState").val();
     const eventZipcode = $("#eventZipCode").val();
     const eventCountry = $("#eventCountry").val();
+    const partnersRequired = $("#requiredPartners").val();
     const creationDate = new Date();
 
     //validate the input
     if (eventTitle == "") {
-        displayError('Please add an item');
+        displayError('Please add event title');
     }
     //    else if (areaName == "Select.." || areaName == undefined || areaName == "") {
     //        displayError('Please add an Area');
@@ -482,7 +511,8 @@ $('.create-event-form').submit(function (event) {
                 eventZipcode: eventZipcode,
                 eventCountry: eventCountry,
                 lat: lat,
-                lng: lng
+                lng: lng,
+                partnersRequired: partnersRequired
             };
             //console.log(newItemObject);
 
@@ -508,7 +538,7 @@ $('.create-event-form').submit(function (event) {
                     $("#contactName").val("");
                     $("#contactEmail").val("");
                     $("#contactNumber").val("");
-
+                    $("#requiredPartners").val("");
                     $('.create-event-container').hide();
                     $('.my-events-list-container').show();
                     displayError("Event created succesfully");
