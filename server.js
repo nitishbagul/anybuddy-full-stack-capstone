@@ -258,9 +258,8 @@ app.put('/event/:id', (req, res) => {
         }));
 });
 
-//Removing some fields
-//PUT
-app.put('/items/remove/:id', (req, res) => {
+//Add partner
+app.put('/event/partner/add/:id', (req, res) => {
     if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
         const message = "Id in the request and body should match";
         console.error(message);
@@ -269,24 +268,54 @@ app.put('/items/remove/:id', (req, res) => {
         });
     }
 
-    const toRemove = {};
-    const updateableFields = ['placeName', 'placeId', 'areaName', 'areaId', 'categoryName', 'categoryId'];
+    const toUpdate = {};
+    const updateableFields = ['partners'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {
-            toRemove[field] = req.body[field];
+            toUpdate[field] = req.body[field];
         }
     });
 
-    Items
+    Events
         .findByIdAndUpdate(req.params.id, {
-            $unset: toRemove
+            $push: toUpdate
         })
         .then(items => res.status(204).json(items))
         .catch(err => res.status(500).json({
             message: 'Inernal server error'
         }));
 });
+
+//Add partner
+app.put('/event/partner/remove/:id', (req, res) => {
+    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+        const message = "Id in the request and body should match";
+        console.error(message);
+        return res.status(400).json({
+            message: message
+        });
+    }
+
+    const toUpdate = {};
+    const updateableFields = ['partners'];
+
+    updateableFields.forEach(field => {
+        if (field in req.body) {
+            toUpdate[field] = req.body[field];
+        }
+    });
+
+    Events
+        .findByIdAndUpdate(req.params.id, {
+            $pull: toUpdate
+        })
+        .then(items => res.status(204).json(items))
+        .catch(err => res.status(500).json({
+            message: 'Inernal server error'
+        }));
+});
+
 
 // GET
 // all items by user
@@ -367,34 +396,7 @@ app.get('/item/:id', function (req, res) {
         });
 });
 
-// Geting Item by Name-Search
-app.get('/items-search/:itemName/:id', function (req, res) {
 
-    Items
-        .find({
-            itemName: {
-                $regex: `.*${req.params.itemName}.*`,
-                $options: "i"
-            }
-        })
-        .then(function (items) {
-            let itemsOutput = [];
-            items.map(function (item) {
-                if (item.loggedInUserId == req.params.id) {
-                    itemsOutput.push(item);
-                }
-            });
-            res.json({
-                itemsOutput
-            });
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal server error'
-            });
-        });
-});
 
 //all items by category ID
 app.get('/items/get/all/:id/:categoryId', function (req, res) {

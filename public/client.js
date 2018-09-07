@@ -211,7 +211,7 @@ function showEventsNearUser(userLat, userLng) {
                 let buildTheHtmlOutput = "";
 
                 $.each(result.events, function (resultKey, resultValue) {
-                    buildTheHtmlOutput += `<li data-eventid=${resultValue._id}>`;
+                    buildTheHtmlOutput += `<li data-eventid=${resultValue._id} data-ownerid=${resultValue.ownerId}>`;
                     buildTheHtmlOutput += `<div class="event-content collapsible">
 <h3 class="event-header">${resultValue.eventTitle}</h3>
 <h4 class="event-date">${resultValue.eventDate.slice(0,10)}, ${resultValue.eventTime}</h4>
@@ -249,8 +249,8 @@ function showEventsNearUser(userLat, userLng) {
                 showMapEvents(result.events);
                 console.log("After showmap");
                 $('.menu-page').show();
-                $('.username').text(result.username);
-                $('#loggedInUserId').val(result._id);
+                //                $('.username').text(result.username);
+                //                $('#loggedInUserId').val(result._id);
 
 
             }
@@ -337,13 +337,23 @@ $(document).on('click', '.event-content', function (event) {
 
 $(document).on('click', '.join-event-button', function (event) {
     event.preventDefault();
-    $('main').hide();
-    $('.my-events-page').hide();
-    $('.event-joining p').hide();
-    $('.event-joining .join-event-button').hide();
-    $('.request-join-form').show();
-    $('.nearby-events-page').show();
-    $('.menu-page').show();
+
+    let ownerId = $(this).closest('li').data('ownerid');
+    let userId = $('#loggedInUserId').val();
+    console.log(ownerId);
+    console.log(userId);
+    if (ownerId == userId) {
+        alert("You cannot join your own event");
+    } else {
+
+        $('main').hide();
+        $('.my-events-page').hide();
+        $('.event-joining p').hide();
+        $('.event-joining .join-event-button').hide();
+        $('.request-join-form').show();
+        $('.nearby-events-page').show();
+        $('.menu-page').show();
+    }
 });
 
 $(document).on('click', '.new-event-button', function (event) {
@@ -433,6 +443,7 @@ $('.login-form').submit(function (event) {
                 console.log(result);
                 $('main').hide();
                 $('.my-events-page').hide();
+                $('#loggedInUserId').val(result._id);
                 getUserLatLong();
 
             })
@@ -501,6 +512,48 @@ $('.register-form').submit(function (event) {
 
 $('.request-join-form').submit(function (event) {
     event.preventDefault();
+    let eventId = $(this).closest('li').data('eventid');
+    //let userId = $('#loggedInUserId').val();
+
+    const newEventObject = {
+        id: itemId,
+        placeName: placeName,
+        placeId: placeId,
+        areaName: areaName,
+        areaId: areaId
+    };
+    $.ajax({
+            type: 'PUT',
+            url: `/event/${eventId}`,
+            dataType: 'json',
+            data: JSON.stringify(newEventObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            console.log(result);
+            $("#eventTitle").val("");
+            $("#eventDate").val("");
+            $("#eventTime").val("");
+            $("#eventStreetAddress").val("");
+            $("#eventCity").val("");
+            $("#eventState").val("");
+            $("#eventZipCode").val("");
+            $("#eventCountry").val("");
+            $("#contactName").val("");
+            $("#contactEmail").val("");
+            $("#contactNumber").val("");
+            $("#requiredPartners").val("");
+            $('.create-event-container').hide();
+            $('.my-events-list-container').show();
+            displayError("Event created succesfully");
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
     $('main').hide();
     $('.my-events-page').hide();
     $('.event-joining').hide();

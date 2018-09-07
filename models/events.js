@@ -68,9 +68,11 @@ const eventsSchema = new mongoose.Schema({
         required: false
     },
     partners: [{
+        partnerId: String,
         partnerName: String,
         partnerEmail: String,
         partnerPhone: Number,
+        partnerStatus: String,
         required: false
     }]
 });
