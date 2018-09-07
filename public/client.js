@@ -26,6 +26,64 @@ function executeCollapsible() {
     }
 }
 
+//Initialize GMAP
+let map;
+
+function initMap() {
+    //    map = new google.maps.Map(document.getElementById('map'), {
+    //        center: {
+    //            lat: -34.397,
+    //            lng: 150.644
+    //        },
+    //        zoom: 8
+    //    });
+
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 45.52,
+            lng: -122.681944
+        },
+        zoom: 15,
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_CENTER
+        },
+    });
+
+
+}
+
+//Map Function to show events
+
+function showMapEvents(events) {
+    console.log("Inside showmapevent");
+    var bounds = new google.maps.LatLngBounds();
+    console.log(events.length);
+    for (let i = 0; i < events.length; i++) {
+
+        position = new google.maps.LatLng(events[i].lat, events[i].lng);
+        console.log(events[i].lat);
+        marker = new google.maps.Marker({
+            position: position,
+            map: map
+        });
+
+        bounds.extend(position)
+        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            return function () {
+                console.log("info fn");
+                infowindow.setContent(`<h3>${events[i].eventTitle}</h3>`);
+                infowindow.open(map, marker);
+            }
+        })(marker, i));
+    }
+    map.fitBounds(bounds);
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+}
 
 //Use Autocomplete to fill address
 
@@ -184,14 +242,16 @@ function showEventsNearUser(userLat, userLng) {
 </div>`;
                     buildTheHtmlOutput += `</li>`;
                     //console.log(buildTheHtmlOutput);
-
-                    //use the HTML output to show it in all items table
-                    $(`.nearby-events-page .events-list`).html(buildTheHtmlOutput);
-                    executeCollapsible();
-                    $('.menu-page').show();
-                    $('.username').text(result.username);
-                    $('#loggedInUserId').val(result._id);
                 })
+                //use the HTML output to show it in all items table
+                $(`.nearby-events-page .events-list`).html(buildTheHtmlOutput);
+                executeCollapsible();
+                showMapEvents(result.events);
+                console.log("After showmap");
+                $('.menu-page').show();
+                $('.username').text(result.username);
+                $('#loggedInUserId').val(result._id);
+
 
             }
 

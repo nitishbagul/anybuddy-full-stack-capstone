@@ -324,13 +324,13 @@ app.get('/events/get/:userLat/:userLng', function (req, res) {
         .find({
             lat: {
 
-                $gt: parseFloat(userLatitude) - 0.30,
-                $lt: parseFloat(userLatitude) + 0.30
+                $gt: parseFloat(userLatitude) - 1,
+                $lt: parseFloat(userLatitude) + 1
 
             },
             lng: {
-                $gt: parseFloat(userLongitude) - 0.30,
-                $lt: parseFloat(userLongitude) + 0.30
+                $gt: parseFloat(userLongitude) - 1,
+                $lt: parseFloat(userLongitude) + 1
             }
         })
         .then(function (events) {
