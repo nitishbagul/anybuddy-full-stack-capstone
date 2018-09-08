@@ -288,8 +288,8 @@ app.put('/event/partner/add/:id', (req, res) => {
 });
 
 //Add partner
-app.put('/event/partner/remove/:id', (req, res) => {
-    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+app.put('/event/partner/remove/:eventId/:partnerId', (req, res) => {
+    if (!(req.params.eventId && req.params.partnerId && req.body.eventId && req.params.eventId === req.body.eventId)) {
         const message = "Id in the request and body should match";
         console.error(message);
         return res.status(400).json({
@@ -297,18 +297,24 @@ app.put('/event/partner/remove/:id', (req, res) => {
         });
     }
 
-    const toUpdate = {};
-    const updateableFields = ['partners'];
-
-    updateableFields.forEach(field => {
-        if (field in req.body) {
-            toUpdate[field] = req.body[field];
-        }
-    });
+//    const toUpdate = {};
+//    const updateableFields = ['partners'];
+//
+//    updateableFields.forEach(field => {
+//        if (field in req.body) {
+//            toUpdate[field] = req.body[field];
+//        }
+//    });
+//
+//    console.log(toUpdate);
 
     Events
-        .findByIdAndUpdate(req.params.id, {
-            $pull: toUpdate
+        .findByIdAndUpdate(req.params.eventId, {
+            $pull: {
+                'partners': {
+                    _id: req.params.partnerId
+                }
+            }
         })
         .then(items => res.status(204).json(items))
         .catch(err => res.status(500).json({
