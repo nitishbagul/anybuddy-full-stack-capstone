@@ -56,13 +56,13 @@ function initMap() {
 //Map Function to show events
 
 function showMapEvents(events) {
-    console.log("Inside showmapevent");
+    //console.log("Inside showmapevent");
     var bounds = new google.maps.LatLngBounds();
-    console.log(events.length);
+    //console.log(events.length);
     for (let i = 0; i < events.length; i++) {
 
         position = new google.maps.LatLng(events[i].lat, events[i].lng);
-        console.log(events[i].lat);
+        //console.log(events[i].lat);
         marker = new google.maps.Marker({
             position: position,
             map: map
@@ -71,7 +71,7 @@ function showMapEvents(events) {
         bounds.extend(position)
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
             return function () {
-                console.log("info fn");
+                // console.log("info fn");
                 infowindow.setContent(`<h3>${events[i].eventTitle}</h3>`);
                 infowindow.open(map, marker);
             }
@@ -116,7 +116,7 @@ function fillInAddress() {
     var place = autocomplete.getPlace();
 
     for (var component in componentForm) {
-        console.log(document.getElementsByClassName(component));
+        //console.log(document.getElementsByClassName(component));
         // console.log(document.getElementsByClassName(component)[0]);
         document.getElementsByClassName(component).value = '';
         document.getElementsByClassName(component).disabled = false;
@@ -165,7 +165,7 @@ function getLatLong(address) {
             })
             .then(function (response) {
                 console.log(response);
-                console.log(response.data.results[0].geometry.location.lat);
+                //console.log(response.data.results[0].geometry.location.lat);
                 let latLong = [response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng];
                 resolve(latLong);
 
@@ -194,7 +194,7 @@ function getUserLatLong() {
 }
 
 function showEventsNearUser(userLat, userLng) {
-    console.log(userLat, userLng);
+    //console.log(userLat, userLng);
     //make the api call to get all events based on GPS
     $.ajax({
             type: 'GET',
@@ -208,9 +208,26 @@ function showEventsNearUser(userLat, userLng) {
             if (result.events.length === 0) {
                 displayError("No places found, please refine the search.")
             } else {
+                let loggedInUser = $('#loggedInUserId').val();
+
+                let checkOwnEvents = result.events.filter(function findOwnEvents(val) {
+                    return !(val.ownerId == loggedInUser)
+                });
+                //console.log(checkOwnEvents);
+                let checkUserEntry = checkOwnEvents.filter(function checkUser(event) {
+
+                    let checkPartnerEntry = event.partners.filter(function checkPartner(partner) {
+                        return partner.partnerId == loggedInUser;
+                    })
+                    return (checkPartnerEntry.length) === 0;
+                });
+                //Filter events to check if required partners > 0
+                let validEvents = checkUserEntry.filter(function checkVal(val) {
+                    return (val.partnersRequired) > 0
+                });
                 let buildTheHtmlOutput = "";
 
-                $.each(result.events, function (resultKey, resultValue) {
+                $.each(validEvents, function (resultKey, resultValue) {
                     buildTheHtmlOutput += `<li data-eventid=${resultValue._id} data-ownerid=${resultValue.ownerId}>`;
                     buildTheHtmlOutput += `<div class="event-content collapsible">
 <h3 class="event-header">${resultValue.eventTitle}</h3>
@@ -221,7 +238,7 @@ function showEventsNearUser(userLat, userLng) {
 <p>Partners Required: <span class="required-partners">${resultValue.partnersRequired}</span></p>
 <button class="join-event-button">Join Event</button>
 <div class="request-join-details">
-<form class="request-join-form" data-eventid=${resultValue._id}>
+<form class="request-join-form" data-eventid=${resultValue._id} data-partnernumber=${resultValue.partnersRequired}>
 <fieldset name="contact-info" class="contact-info">
 
 <label for="contactName">Name</label>
@@ -247,13 +264,39 @@ function showEventsNearUser(userLat, userLng) {
                 $(`.nearby-events-page .events-list`).html(buildTheHtmlOutput);
                 executeCollapsible();
                 showMapEvents(result.events);
-                console.log("After showmap");
+                //console.log("After showmap");
                 $('.menu-page').show();
                 //                $('.username').text(result.username);
                 //                $('#loggedInUserId').val(result._id);
 
 
             }
+
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+}
+
+function reducePartnersRequiredCount(eventId, partnersRequired) {
+
+    let actualPartners = partnersRequired - 1;
+    const newEventObject = {
+        id: eventId,
+        partnersRequired: actualPartners
+    };
+    $.ajax({
+            type: 'PUT',
+            url: `/event/${eventId}`,
+            dataType: 'json',
+            data: JSON.stringify(newEventObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
 
         })
         //if the call is failing
@@ -340,8 +383,8 @@ $(document).on('click', '.join-event-button', function (event) {
 
     let ownerId = $(this).closest('li').data('ownerid');
     let userId = $('#loggedInUserId').val();
-    console.log(ownerId);
-    console.log(userId);
+    //console.log(ownerId);
+    //console.log(userId);
     if (ownerId == userId) {
         alert("You cannot join your own event");
     } else {
@@ -481,7 +524,6 @@ $('.register-form').submit(function (event) {
             username: username,
             password: password
         };
-        console.log(newUserObject);
 
         //make the api call using the payload above
         $.ajax({
@@ -510,42 +552,42 @@ $('.register-form').submit(function (event) {
 
 });
 
-$('.request-join-form').submit(function (event) {
+$(document).on('submit', '.request-join-form', function (event) {
     event.preventDefault();
+    let requiredPartners = $(this).data('partnernumber');
+    console.log(requiredPartners);
+
     let eventId = $(this).closest('li').data('eventid');
-    //let userId = $('#loggedInUserId').val();
+    let partnerId = $('#loggedInUserId').val();
+    let partnerName = $(".partnerName").val();
+    let partnerEmail = $(".partnerEmail").val();
+    let partnerPhone = $(".partnerPhone").val();
+    let partnerStatus = "Awaiting response";
 
     const newEventObject = {
-        id: itemId,
-        placeName: placeName,
-        placeId: placeId,
-        areaName: areaName,
-        areaId: areaId
+        id: eventId,
+        partners: [{
+            partnerId: partnerId,
+            partnerName: partnerName,
+            partnerEmail: partnerEmail,
+            partnerPhone: partnerPhone,
+            partnerStatus: partnerStatus
+        }]
     };
+    //console.log(JSON.stringify(newEventObject));
     $.ajax({
             type: 'PUT',
-            url: `/event/${eventId}`,
+            url: `/event/partner/add/${eventId}`,
             dataType: 'json',
             data: JSON.stringify(newEventObject),
             contentType: 'application/json'
         })
         //if call is succefull
         .done(function (result) {
-            console.log(result);
-            $("#eventTitle").val("");
-            $("#eventDate").val("");
-            $("#eventTime").val("");
-            $("#eventStreetAddress").val("");
-            $("#eventCity").val("");
-            $("#eventState").val("");
-            $("#eventZipCode").val("");
-            $("#eventCountry").val("");
-            $("#contactName").val("");
-            $("#contactEmail").val("");
-            $("#contactNumber").val("");
-            $("#requiredPartners").val("");
-            $('.create-event-container').hide();
-            $('.my-events-list-container').show();
+            //console.log(result);
+            $(".partnerName").val("");
+            $(".partnerEmail").val("");
+            $(".partnerPhone").val("");
             displayError("Event created succesfully");
         })
         //if the call is failing
@@ -554,6 +596,7 @@ $('.request-join-form').submit(function (event) {
             console.log(error);
             console.log(errorThrown);
         });
+    reducePartnersRequiredCount(eventId, requiredPartners);
     $('main').hide();
     $('.my-events-page').hide();
     $('.event-joining').hide();

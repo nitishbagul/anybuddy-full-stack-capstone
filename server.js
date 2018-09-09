@@ -296,18 +296,6 @@ app.put('/event/partner/remove/:eventId/:partnerId', (req, res) => {
             message: message
         });
     }
-
-//    const toUpdate = {};
-//    const updateableFields = ['partners'];
-//
-//    updateableFields.forEach(field => {
-//        if (field in req.body) {
-//            toUpdate[field] = req.body[field];
-//        }
-//    });
-//
-//    console.log(toUpdate);
-
     Events
         .findByIdAndUpdate(req.params.eventId, {
             $pull: {
@@ -324,20 +312,48 @@ app.put('/event/partner/remove/:eventId/:partnerId', (req, res) => {
 
 
 // GET
-// all items by user
-app.get('/items/:user', function (req, res) {
+//all events by userID
+app.get('/events/get/all/:userId', function (req, res) {
 
-    Items
+    Events
         .find()
-        .then(function (items) {
-            let itemsOutput = [];
-            items.map(function (item) {
-                if (item.loggedInUserName == req.params.user) {
-                    itemsOutput.push(item);
+        .then(function (events) {
+            let eventsOutput = [];
+            events.map(function (event) {
+                if (event.ownerId == req.params.userId) {
+                    eventsOutput.push(event);
                 }
             });
             res.json({
-                itemsOutput
+                eventsOutput
+            });
+        })
+        .catch(function (err) {
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error'
+            });
+        });
+});
+
+//other events by userID
+app.get('/events/get/all/others/:userId', function (req, res) {
+
+    Events
+        .find()
+        .then(function (events) {
+            let allOtherEvents = events.filter(function processOther(event) {
+                return !(event.ownerId == req.params.userId);
+            });
+
+            let checkUserEntry = allOtherEvents.filter(function checkUser(event) {
+                let checkPartnerEntry = event.partners.filter(function checkPartner(partner) {
+                    return partner.partnerId == req.params.userId;
+                })
+                return (checkPartnerEntry.length) > 0;
+            });
+            res.json({
+                checkUserEntry
             });
         })
         .catch(function (err) {
