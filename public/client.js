@@ -401,6 +401,7 @@ $(document).on('click', '.join-event-button', function (event) {
 
 $(document).on('click', '.new-event-button', function (event) {
     event.preventDefault();
+    initAutocomplete();
     $('main').hide();
     $('.nearby-events-page').hide();
     $('.my-events-list-container').hide();
