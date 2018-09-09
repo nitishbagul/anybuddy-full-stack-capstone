@@ -195,6 +195,7 @@ app.post('/events/create', (req, res) => {
     let lat = req.body.lat;
     let lng = req.body.lng;
     let partnersRequired = req.body.partnersRequired;
+    let partners = req.body.partners;
     let creationDate = new Date();
 
     Events.create({
@@ -214,6 +215,7 @@ app.post('/events/create', (req, res) => {
         lat,
         lng,
         partnersRequired,
+        partners,
         creationDate
     }, (err, event) => {
         if (err) {

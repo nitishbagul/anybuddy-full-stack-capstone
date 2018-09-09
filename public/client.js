@@ -189,12 +189,14 @@ function getUserLatLong() {
     function showPosition(position) {
         userLat = position.coords.latitude;
         userLng = position.coords.longitude;
+        $("#loggedInUserId").data("lat", userLat);
+        $("#loggedInUserId").data("lng", userLng);
         showEventsNearUser(userLat, userLng);
     }
 }
 
 function showEventsNearUser(userLat, userLng) {
-    //console.log(userLat, userLng);
+    console.log(userLat, userLng);
     //make the api call to get all events based on GPS
     $.ajax({
             type: 'GET',
@@ -263,7 +265,7 @@ function showEventsNearUser(userLat, userLng) {
                 //use the HTML output to show it in all items table
                 $(`.nearby-events-page .events-list`).html(buildTheHtmlOutput);
                 executeCollapsible();
-                showMapEvents(result.events);
+                showMapEvents(validEvents);
                 //console.log("After showmap");
                 $('.menu-page').show();
                 //                $('.username').text(result.username);
@@ -597,7 +599,10 @@ $(document).on('submit', '.request-join-form', function (event) {
             console.log(error);
             console.log(errorThrown);
         });
+    let userLat = $("#loggedInUserId").data("lat");
+    let userLng = $("#loggedInUserId").data("lng");
     reducePartnersRequiredCount(eventId, requiredPartners);
+    showEventsNearUser(userLat, userLng);
     $('main').hide();
     $('.my-events-page').hide();
     $('.event-joining').hide();
@@ -631,6 +636,11 @@ $('.create-event-form').submit(function (event) {
     const eventZipcode = $("#eventZipCode").val();
     const eventCountry = $("#eventCountry").val();
     const partnersRequired = $("#requiredPartners").val();
+    const partnerId = ownerId;
+    const partnerName = $("#contactName").val();
+    const partnerEmail = $("#contactEmail").val();
+    const partnerPhone = $("#contactNumber").val();
+    const partnerStatus = "Approved";
     const creationDate = new Date();
 
     //validate the input
@@ -669,9 +679,16 @@ $('.create-event-form').submit(function (event) {
                 eventCountry: eventCountry,
                 lat: lat,
                 lng: lng,
-                partnersRequired: partnersRequired
+                partnersRequired: partnersRequired,
+                partners: {
+                    partnerId: partnerId,
+                    partnerName: partnerName,
+                    partnerEmail: partnerEmail,
+                    partnerPhone: partnerPhone,
+                    partnerStatus: partnerStatus
+                }
             };
-            //console.log(newItemObject);
+            console.log(newEventObject);
 
             //make the api call using the payload above
             $.ajax({

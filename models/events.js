@@ -71,7 +71,7 @@ const eventsSchema = new mongoose.Schema({
         partnerId: String,
         partnerName: String,
         partnerEmail: String,
-        partnerPhone: Number,
+        partnerPhone: String,
         partnerStatus: String,
         required: false
     }]
