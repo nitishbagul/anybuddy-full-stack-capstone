@@ -322,6 +322,22 @@ function showMyOwnEvents(userId) {
             let buildTheHtmlOutput = "";
 
             $.each(result.eventsOutput, function (resultKey, resultValue) {
+
+                let buildPartnerList = ``;
+                $.each(this.partners, function (resultKey, resultValue) {
+                    buildPartnerList += `<li>
+<button class="collapsible contact-collapse">${resultValue.partnerName}</button>
+<div class="collapse-content contact-collapse-content">
+<p>Email: <span>${resultValue.partnerEmail}</span></p>
+<p>Phone: <span>${resultValue.partnerPhone}</span></p>
+<div class="approval-buttons">
+<button class="accept-button">Accept</button>
+<span>|</span>
+<button class="reject-button">Reject</button>
+</div>
+</div>
+</li>`
+                })
                 buildTheHtmlOutput += `<li class="creator-single-event-display" data-eventid=${resultValue._id}>`;
                 console.log(resultKey, resultValue);
                 buildTheHtmlOutput += `<div class="event-update-buttons">
@@ -340,23 +356,9 @@ function showMyOwnEvents(userId) {
 </div>`;
                 buildTheHtmlOutput += `<div class="collapse-button">
 <button class="collapsible">My Partners</button>
-<div class="collapse-content">
-<button class="collapsible contact-collapse">John Snow</button>
-<div class="collapse-content contact-collapse-content">
-<p>Email: <span>johnsnow@gmail.com</span></p>
-<p>Phone: <span>778-887-7777</span></p>
-<div class="approval-buttons">
-<button class="accept-button">Accept</button>
-<span>|</span>
-<button class="reject-button">Reject</button>
-</div>
-</div>
-<button class="collapsible contact-collapse">Rob Stark</button>
-<div class="collapse-content contact-collapse-content">
-<p>Email: <span>robstark@yahoo.com</span></p>
-<p>Phone: <span>887-999-6666</span></p>
-</div>
-</div>
+<ul class="collapse-content">
+${buildPartnerList}
+</ul>
 </div>`;
                 buildTheHtmlOutput += `<div class="edit-event-container">
 <form class="edit-event-form">
