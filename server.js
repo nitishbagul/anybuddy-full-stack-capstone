@@ -289,7 +289,7 @@ app.put('/event/partner/add/:id', (req, res) => {
         }));
 });
 
-//Add partner
+//Remove partner
 app.put('/event/partner/remove/:eventId/:partnerId', (req, res) => {
     if (!(req.params.eventId && req.params.partnerId && req.body.eventId && req.params.eventId === req.body.eventId)) {
         const message = "Id in the request and body should match";

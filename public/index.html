@@ -226,117 +226,112 @@
                 </div>
 
                 <div class="my-events-list-container">
-                    <div class="creator-single-event-display">
+                    <div class="self-view-display">
+                        <ul class="self-view-display-list">
+                            <!--
+<li class="creator-single-event-display">
+    <div class="event-update-buttons">
+        <button class="edit-event-button">Edit</button>
+        <span>|</span>
+        <button class="delete-event-button">Delete</button>
+    </div>
+    <div class="single-event-info">
+        <h3>Game of Chess</h3>
+        <h4>Date</h4>
+        <p>Aug 30, 2018 10PM</p>
+        <h4>Location</h4>
+        <p>2147 Newhall Street, Santa Clara, CA-94085</p>
+        <h4>Status</h4>
+        <p>Pending approval</p>
+    </div>
 
-                        <div class="event-update-buttons">
-                            <button class="edit-event-button">Edit</button>
-                            <span>|</span>
-                            <button class="delete-event-button">Delete</button>
-                        </div>
-                        <div class="single-event-info">
-                            <h3>Game of Chess</h3>
-                            <h4>Date</h4>
-                            <p>Aug 30, 2018 10PM</p>
-                            <h4>Location</h4>
-                            <p>2147 Newhall Street, Santa Clara, CA-94085</p>
-                            <h4>Status</h4>
-                            <p>Pending approval</p>
-                        </div>
+    <div class="collapse-button">
+        <button class="collapsible">My Partners</button>
+        <div class="collapse-content">
+            <button class="collapsible contact-collapse">John Snow</button>
+            <div class="collapse-content contact-collapse-content">
+                <p>Email: <span>johnsnow@gmail.com</span></p>
+                <p>Phone: <span>778-887-7777</span></p>
+                <div class="approval-buttons">
+                    <button class="accept-button">Accept</button>
+                    <span>|</span>
+                    <button class="reject-button">Reject</button>
+                </div>
+            </div>
+            <button class="collapsible contact-collapse">Rob Stark</button>
+            <div class="collapse-content contact-collapse-content">
+                <p>Email: <span>robstark@yahoo.com</span></p>
+                <p>Phone: <span>887-999-6666</span></p>
+            </div>
+        </div>
+    </div>
 
-                        <div class="collapse-button">
-                            <button class="collapsible">My Partners</button>
-                            <div class="collapse-content">
-                                <button class="collapsible contact-collapse">John Snow</button>
-                                <div class="collapse-content contact-collapse-content">
-                                    <p>Email: <span>johnsnow@gmail.com</span></p>
-                                    <p>Phone: <span>778-887-7777</span></p>
-                                    <div class="approval-buttons">
-                                        <button class="accept-button">Accept</button>
-                                        <span>|</span>
-                                        <button class="reject-button">Reject</button>
-                                    </div>
-                                </div>
-                                <button class="collapsible contact-collapse">Rob Stark</button>
-                                <div class="collapse-content contact-collapse-content">
-                                    <p>Email: <span>robstark@yahoo.com</span></p>
-                                    <p>Phone: <span>887-999-6666</span></p>
-                                </div>
-                            </div>
-                        </div>
+    <div class="edit-event-container">
+        <form class="edit-event-form">
+            <h2 class="event-details-text">Edit Event</h2>
+            <fieldset name="event-info" class="event-info">
 
-                        <div class="edit-event-container">
-                            <form class="edit-event-form">
-                                <h2 class="event-details-text">Edit Event</h2>
-                                <fieldset name="event-info" class="event-info">
+                <label for="eventTitle">Event Title</label>
+                <input role="textbox" type="text" name="title" class="editEventTitle" value="Play Tennis" required="">
 
-                                    <label for="eventTitle">Event Title</label>
-                                    <input role="textbox" type="text" name="title" id="editEventTitle" value="Play Tennis" required="">
+                <label for="eventDate">Date</label>
+                <input type="date" name="date" class="editEventDate" value="" required="">
 
-                                    <label for="eventDate">Date</label>
-                                    <input type="date" name="date" id="editEventDate" value="" required="">
+                <label for="eventTime">Time</label>
+                <input type="time" name="time" class="editEventTime" value="" required="">
 
-                                    <label for="eventTime">Time</label>
-                                    <input type="time" name="time" id="editEventTime" value="" required="">
+            </fieldset>
 
-                                    <!--
-<label for="eventStreetAddress">Street Address</label>
-<input role="textbox" type="text" name="street" id="editEventStreetAddress" value="" required="">
+            <button role="button" type="submit" class="save-event-button">Save</button>
+        </form>
+    </div>
 
-<label for="eventCity">City</label>
-<input role="textbox" type="text" name="city" id="editEventCity" value="" required="">
+    <div class="delete-event-container">
+        <p>Removing <span class="delete-event-name">Game Of Chess</span></p>
+        <p>The event will be permanently deleted.</p>
+        <button role="button" class="delete-event-button">Delete</button>
+    </div>
+</li>
+-->
+                        </ul>
 
-<label for="eventState">State</label>
-<input role="textbox" type="text" name="state" id="editEventState" value="" required="">
 
-<label for="eventZipCode">Zip Code</label>
-<input role="textbox" type="number" name="zip" id="editEventZipCode" value="" required="">
-
-<label for="eventCountry">Country</label>
-<input role="textbox" type="text" name="country" id="editEventCountry" value="" required="">-->
-
-                                </fieldset>
-
-                                <button role="button" type="submit" class="save-event-button">Save</button>
-                            </form>
-                        </div>
-
-                        <div class="delete-event-container">
-                            <p>Removing <span class="delete-event-name">Game Of Chess</span></p>
-                            <p>The event will be permanently deleted.</p>
-                            <button role="button" class="delete-event-button">Delete</button>
-                        </div>
                     </div>
 
-                    <div class="partner-single-event-display">
-
-                        <div class="event-update-buttons">
-                            <button class="delete-event-button">Delete</button>
-                        </div>
-                        <div class="single-event-info">
-                            <h3>Hiking</h3>
-                            <h4>Date</h4>
-                            <p>Sep 15, 2018 7AM</p>
-                            <h4>Location</h4>
-                            <p>Montebello Open Space Preserve, Saratoga, CA-94085</p>
-                            <h4>Status</h4>
-                            <p>Pending approval</p>
-                        </div>
-
-                        <div class="collapse-button">
-                            <button class="collapsible">My Partners</button>
-                            <div class="collapse-content">
-                                <button class="collapsible contact-collapse">Capatain Morgan</button>
-                                <div class="collapse-content contact-collapse-content">
-                                    <p>Email: <span>captainmorgan@gmail.com</span></p>
-                                    <p>Phone: <span>778-887-7777</span></p>
+                    <div class="others-view-display">
+                        <ul>
+                            <li class="partner-single-event-display">
+                                <div class="event-update-buttons">
+                                    <button class="delete-event-button">Delete</button>
                                 </div>
-                                <button class="collapsible contact-collapse">Jack Daniels</button>
-                                <div class="collapse-content contact-collapse-content">
-                                    <p>Email: <span>jackd@yahoo.com</span></p>
-                                    <p>Phone: <span>887-999-6666</span></p>
+                                <div class="single-event-info">
+                                    <h3>Hiking</h3>
+                                    <h4>Date</h4>
+                                    <p>Sep 15, 2018 7AM</p>
+                                    <h4>Location</h4>
+                                    <p>Montebello Open Space Preserve, Saratoga, CA-94085</p>
+                                    <h4>Status</h4>
+                                    <p>Pending approval</p>
                                 </div>
-                            </div>
-                        </div>
+
+                                <div class="collapse-button">
+                                    <button class="collapsible">My Partners</button>
+                                    <div class="collapse-content">
+                                        <button class="collapsible contact-collapse">Capatain Morgan</button>
+                                        <div class="collapse-content contact-collapse-content">
+                                            <p>Email: <span>captainmorgan@gmail.com</span></p>
+                                            <p>Phone: <span>778-887-7777</span></p>
+                                        </div>
+                                        <button class="collapsible contact-collapse">Jack Daniels</button>
+                                        <div class="collapse-content contact-collapse-content">
+                                            <p>Email: <span>jackd@yahoo.com</span></p>
+                                            <p>Phone: <span>887-999-6666</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
                     </div>
                 </div>
 

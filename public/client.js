@@ -260,9 +260,8 @@ function showEventsNearUser(userLat, userLng) {
 </div>
 </div>`;
                     buildTheHtmlOutput += `</li>`;
-                    //console.log(buildTheHtmlOutput);
                 })
-                //use the HTML output to show it in all items table
+                //use the HTML output to show
                 $(`.nearby-events-page .events-list`).html(buildTheHtmlOutput);
                 executeCollapsible();
                 showMapEvents(validEvents);
@@ -309,6 +308,99 @@ function reducePartnersRequiredCount(eventId, partnersRequired) {
         });
 }
 
+function showMyOwnEvents(userId) {
+    $.ajax({
+            type: 'GET',
+            url: `/events/get/all/${userId}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        .done(function (result) {
+            console.log(result);
+            console.log(result.eventsOutput);
+
+            let buildTheHtmlOutput = "";
+
+            $.each(result.eventsOutput, function (resultKey, resultValue) {
+                buildTheHtmlOutput += `<li class="creator-single-event-display" data-eventid=${resultValue._id}>`;
+                console.log(resultKey, resultValue);
+                buildTheHtmlOutput += `<div class="event-update-buttons">
+<button class="edit-event-button">Edit</button>
+<span>|</span>
+<button class="delete-event-button">Delete</button>
+</div>`;
+                buildTheHtmlOutput += `<div class="single-event-info">
+<h3>${resultValue.eventTitle}</h3>
+<h4>Date</h4>
+<p>${resultValue.eventDate.slice(0,10)}, ${resultValue.eventTime}</p>
+<h4>Location</h4>
+<p>${resultValue.eventStreetAddress}, ${resultValue.eventCity}</p>
+<h4>Status</h4>
+<p>Pending approval</p>
+</div>`;
+                buildTheHtmlOutput += `<div class="collapse-button">
+<button class="collapsible">My Partners</button>
+<div class="collapse-content">
+<button class="collapsible contact-collapse">John Snow</button>
+<div class="collapse-content contact-collapse-content">
+<p>Email: <span>johnsnow@gmail.com</span></p>
+<p>Phone: <span>778-887-7777</span></p>
+<div class="approval-buttons">
+<button class="accept-button">Accept</button>
+<span>|</span>
+<button class="reject-button">Reject</button>
+</div>
+</div>
+<button class="collapsible contact-collapse">Rob Stark</button>
+<div class="collapse-content contact-collapse-content">
+<p>Email: <span>robstark@yahoo.com</span></p>
+<p>Phone: <span>887-999-6666</span></p>
+</div>
+</div>
+</div>`;
+                buildTheHtmlOutput += `<div class="edit-event-container">
+<form class="edit-event-form">
+<h2 class="event-details-text">Edit Event</h2>
+<fieldset name="event-info" class="event-info">
+
+<label for="eventTitle">Event Title</label>
+<input role="textbox" type="text" name="title" class="editEventTitle" value="Play Tennis" required="">
+
+<label for="eventDate">Date</label>
+<input type="date" name="date" class="editEventDate" value="" required="">
+
+<label for="eventTime">Time</label>
+<input type="time" name="time" class="editEventTime" value="" required="">
+
+</fieldset>
+
+<button role="button" type="submit" class="save-event-button">Save</button>
+</form>
+</div>`;
+                buildTheHtmlOutput += `<div class="delete-event-container">
+<p>Removing <span class="delete-event-name">Game Of Chess</span></p>
+<p>The event will be permanently deleted.</p>
+<button role="button" class="delete-event-button">Delete</button>
+</div>`;
+                buildTheHtmlOutput += `</li>`;
+
+            })
+            //use the HTML output to show
+            $(`.my-events-page .self-view-display .self-view-display-list`).html(buildTheHtmlOutput);
+            $('.edit-event-container').hide();
+            $('.delete-event-container').hide();
+            executeCollapsible();
+
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+
+}
+
 //Step 2: Use functions, objects and variables(Triggers)
 
 $(document).ready(function () {
@@ -352,15 +444,19 @@ $(document).on('click', '.register-link', function (event) {
 
 $(document).on('click', '.my-events-button', function (event) {
     event.preventDefault();
+    alert("hi");
+    let userId = $("#loggedInUserId").val();
     $('main').hide();
     $('.nearby-events-page').hide();
     $('.create-event-container').hide();
     $('.no-events-text').hide();
-    $('.edit-event-container').hide();
-    $('.delete-event-container').hide();
+    $('.others-view-display').hide();
+    $(this).find('.edit-event-container').hide();
+    $(this).find('.delete-event-container').hide();
     $('.my-events-list-container').show();
     $('.my-events-page').show();
     $('.menu-page').show();
+    showMyOwnEvents(userId);
 });
 
 $(document).on('click', '.nearby-events-button', function (event) {
