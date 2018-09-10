@@ -323,8 +323,13 @@ function showMyOwnEvents(userId) {
 
             $.each(result.eventsOutput, function (resultKey, resultValue) {
 
+                let owner = this.ownerId;
+                let checkPartners = this.partners.filter(function filterPartner(val) {
+                    return !(val.partnerId == owner)
+                });
+
                 let buildPartnerList = ``;
-                $.each(this.partners, function (resultKey, resultValue) {
+                $.each(checkPartners, function (resultKey, resultValue) {
                     buildPartnerList += `<li>
 <button class="collapsible contact-collapse">${resultValue.partnerName}</button>
 <div class="collapse-content contact-collapse-content">
