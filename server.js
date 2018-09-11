@@ -242,7 +242,7 @@ app.put('/event/:id', (req, res) => {
     }
 
     const toUpdate = {};
-    const updateableFields = ['eventTitle', 'eventDate', 'eventTime', 'partnersRequired', 'partners'];
+    const updateableFields = ['eventTitle', 'eventDate', 'eventTime', 'partnersRequired'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {

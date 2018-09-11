@@ -196,7 +196,7 @@ function getUserLatLong() {
 }
 
 function showEventsNearUser(userLat, userLng) {
-    console.log(userLat, userLng);
+    //console.log(userLat, userLng);
     //make the api call to get all events based on GPS
     $.ajax({
             type: 'GET',
@@ -317,7 +317,7 @@ function showMyOwnEvents(userId) {
         })
         .done(function (result) {
             console.log(result);
-            console.log(result.eventsOutput);
+            //console.log(result.eventsOutput);
 
             let buildTheHtmlOutput = "";
 
@@ -344,7 +344,7 @@ function showMyOwnEvents(userId) {
 </li>`
                 })
                 buildTheHtmlOutput += `<li class="creator-single-event-display" data-eventid=${resultValue._id}>`;
-                console.log(resultKey, resultValue);
+                //console.log(resultKey, resultValue);
                 buildTheHtmlOutput += `<div class="event-update-buttons">
 <button class="edit-event-button">Edit</button>
 <span>|</span>
@@ -371,13 +371,13 @@ ${buildPartnerList}
 <fieldset name="event-info" class="event-info">
 
 <label for="eventTitle">Event Title</label>
-<input role="textbox" type="text" name="title" class="editEventTitle" value="Play Tennis" required="">
+<input role="textbox" type="text" name="title" class="editEventTitle" value="${resultValue.eventTitle}" required="">
 
 <label for="eventDate">Date</label>
-<input type="date" name="date" class="editEventDate" value="" required="">
+<input type="date" name="date" class="editEventDate" value="${resultValue.eventDate.slice(0,10)}" required="">
 
 <label for="eventTime">Time</label>
-<input type="time" name="time" class="editEventTime" value="" required="">
+<input type="time" name="time" class="editEventTime" value="${resultValue.eventTime}" required="">
 
 </fieldset>
 
@@ -451,7 +451,6 @@ $(document).on('click', '.register-link', function (event) {
 
 $(document).on('click', '.my-events-button', function (event) {
     event.preventDefault();
-    alert("hi");
     let userId = $("#loggedInUserId").val();
     $('main').hide();
     $('.nearby-events-page').hide();
@@ -526,6 +525,7 @@ $(document).on('click', '.edit-event-button', function (event) {
     $('.my-events-list-container').show();
     $('.my-events-page').show();
     $('.menu-page').show();
+
 
 });
 
@@ -661,7 +661,7 @@ $('.register-form').submit(function (event) {
 $(document).on('submit', '.request-join-form', function (event) {
     event.preventDefault();
     let requiredPartners = $(this).data('partnernumber');
-    console.log(requiredPartners);
+    //console.log(requiredPartners);
 
     let eventId = $(this).closest('li').data('eventid');
     let partnerId = $('#loggedInUserId').val();
@@ -791,7 +791,7 @@ $('.create-event-form').submit(function (event) {
                     partnerStatus: partnerStatus
                 }
             };
-            console.log(newEventObject);
+            //console.log(newEventObject);
 
             //make the api call using the payload above
             $.ajax({
@@ -818,6 +818,7 @@ $('.create-event-form').submit(function (event) {
                     $("#requiredPartners").val("");
                     $('.create-event-container').hide();
                     $('.my-events-list-container').show();
+                    showMyOwnEvents(ownerId);
                     displayError("Event created succesfully");
                 })
                 //if the call is failing
@@ -831,14 +832,61 @@ $('.create-event-form').submit(function (event) {
 
 });
 
-$('.edit-event-form').submit(function (event) {
+$(document).on('submit', '.edit-event-form', function (event) {
     event.preventDefault();
-    $('main').hide();
-    $('.nearby-events-page').hide();
-    $('.create-event-container').hide();
-    $('.edit-event-container').hide();
-    $('.delete-event-container').hide();
-    $('.my-events-list-container').show();
-    $('.my-events-page').show();
-    $('.menu-page').show();
+
+    let userId = $("#loggedInUserId").val();
+    //    $('main').hide();
+    //    $('.nearby-events-page').hide();
+    //    $('.create-event-container').hide();
+    //    $('.no-events-text').hide();
+    //    $('.others-view-display').hide();
+    //    $(this).find('.edit-event-container').hide();
+    //    $(this).find('.delete-event-container').hide();
+    //    $('.my-events-list-container').show();
+    //    $('.my-events-page').show();
+    //    $('.menu-page').show();
+    //    showMyOwnEvents(userId);
+
+    const eventTitle = $(this).find(".editEventTitle").val();
+    const eventDate = $(this).find(".editEventDatw").val();
+    const eventTime = $(this).find(".editEventTime").val();
+
+    let eventId = $(this).closest('li').data('eventid');
+
+    const editEventObject = {
+        id: eventId,
+        eventTitle: eventTitle,
+        eventDate: eventDate,
+        eventTime: eventTime
+    };
+    $.ajax({
+            type: 'PUT',
+            url: `/event/${eventId}`,
+            dataType: 'json',
+            data: JSON.stringify(editEventObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            console.log(result);
+
+            //            $('main').hide();
+            //            $('.nearby-events-page').hide();
+            //            $('.create-event-container').hide();
+            //            $('.edit-event-container').hide();
+            //            $('.delete-event-container').hide();
+            //            $('.my-events-list-container').show();
+            //            $('.my-events-page').show();
+            //            $('.menu-page').show();
+
+            displayError("Event edited succesfully");
+            showMyOwnEvents(userId);
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
 });
