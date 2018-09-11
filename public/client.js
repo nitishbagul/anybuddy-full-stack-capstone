@@ -408,6 +408,113 @@ ${buildPartnerList}
 
 }
 
+function showJoinedEvents(userId) {
+
+    let userId = $("#loggedInUserId").val();
+
+    $.ajax({
+            type: 'GET',
+            url: `/events/get/all/joined/${userId}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        .done(function (result) {
+            console.log(result);
+            //console.log(result.eventsOutput);
+
+            let buildTheHtmlOutput = "";
+
+            let buildPartnerList = ``;
+            $.each(result.eventsOutput, function (resultKey, resultValue) {
+                buildPartnerList += `<li>
+<button class="collapsible contact-collapse">${resultValue.partnerName}</button>
+<div class="collapse-content contact-collapse-content">
+<p>Email: <span>${resultValue.partnerEmail}</span></p>
+<p>Phone: <span>${resultValue.partnerPhone}</span></p>
+<div class="approval-buttons">
+<button class="accept-button">Accept</button>
+<span>|</span>
+<button class="reject-button">Reject</button>
+</div>
+</div>
+</li>`
+            })
+            buildTheHtmlOutput += `<li class="creator-single-event-display" data-eventid=${resultValue._id}>`;
+            //console.log(resultKey, resultValue);
+            buildTheHtmlOutput += `<div class="event-update-buttons">
+<button class="edit-event-button">Edit</button>
+<span>|</span>
+<button class="delete-event-button">Delete</button>
+</div>`;
+            buildTheHtmlOutput += `<div class="single-event-info">
+<h3>${resultValue.eventTitle}</h3>
+<h4>Date</h4>
+<p>${resultValue.eventDate.slice(0,10)}, ${resultValue.eventTime}</p>
+<h4>Location</h4>
+<p>${resultValue.eventStreetAddress}, ${resultValue.eventCity}</p>
+<h4>Status</h4>
+<p>Pending approval</p>
+</div>`;
+            buildTheHtmlOutput += `<div class="collapse-button">
+<button class="collapsible">My Partners</button>
+<ul class="collapse-content">
+${buildPartnerList}
+</ul>
+</div>`;
+            buildTheHtmlOutput += `<div class="edit-event-container">
+<form class="edit-event-form">
+<h2 class="event-details-text">Edit Event</h2>
+<fieldset name="event-info" class="event-info">
+
+<label for="eventTitle">Event Title</label>
+<input role="textbox" type="text" name="title" class="editEventTitle" value="${resultValue.eventTitle}" required="">
+
+<label for="eventDate">Date</label>
+<input type="date" name="date" class="editEventDate" value="${resultValue.eventDate.slice(0,10)}" required="">
+
+<label for="eventTime">Time</label>
+<input type="time" name="time" class="editEventTime" value="${resultValue.eventTime}" required="">
+
+</fieldset>
+
+<button role="button" type="submit" class="save-event-button">Save</button>
+</form>
+</div>`;
+            buildTheHtmlOutput += `<div class="delete-event-container">
+<p>Removing <span class="delete-event-name">Game Of Chess</span></p>
+<p>The event will be permanently deleted.</p>
+<button role="button" class="delete-event-button">Delete</button>
+</div>`;
+            buildTheHtmlOutput += `</li>`;
+
+        })
+    //use the HTML output to show
+    $(`.my-events-page .self-view-display .self-view-display-list`).html(buildTheHtmlOutput);
+    $('.edit-event-container').hide();
+    $('.delete-event-container').hide();
+    executeCollapsible();
+
+})
+//if the call is failing
+.fail(function (jqXHR, error, errorThrown) {
+    console.log(jqXHR);
+    console.log(error);
+    console.log(errorThrown);
+});
+
+}
+
+//Change event for dynamic dropdowns
+$(document).on('change', '.filter-events', function (event) {
+    let userId = $("#loggedInUserId").val();
+    var selectedValue = $('.filter-events option:selected').val();
+    console.log(selectedValue);
+    if (selectedValue == 0) {
+        showMyOwnEvents(userId);
+    } else
+        showJoinedEvents(userId);
+});
+
 //Step 2: Use functions, objects and variables(Triggers)
 
 $(document).ready(function () {
@@ -553,6 +660,26 @@ $(document).on('click', '.delete-event-container .delete-event-button', function
     $('.my-events-page').show();
     $('.menu-page').show();
 
+    let eventId = $(this).closest('li').data('eventid');
+    let userId = $("#loggedInUserId").val();
+
+    $.ajax({
+            type: 'DELETE',
+            url: `/event/${eventId}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            displayError("deleted event");
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+    showMyOwnEvents(userId);
 });
 
 //Form Triggers

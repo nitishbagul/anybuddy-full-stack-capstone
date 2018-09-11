@@ -339,7 +339,7 @@ app.get('/events/get/all/:userId', function (req, res) {
 });
 
 //other events by userID
-app.get('/events/get/all/others/:userId', function (req, res) {
+app.get('/events/get/all/joined/:userId', function (req, res) {
 
     Events
         .find()
@@ -406,50 +406,9 @@ app.get('/events/get/:userLat/:userLng', function (req, res) {
         });
 });
 
-// Geting Item by ID
-app.get('/item/:id', function (req, res) {
-    Items
-        .findById(req.params.id).exec().then(function (item) {
-            return res.json(item);
-        })
-        .catch(function (items) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-
-
-//all items by category ID
-app.get('/items/get/all/:id/:categoryId', function (req, res) {
-
-    Items
-        .find()
-        .then(function (items) {
-            let itemsOutput = [];
-            items.map(function (item) {
-                if (item.loggedInUserId == req.params.id && item.categoryId == req.params.categoryId) {
-                    itemsOutput.push(item);
-                }
-            });
-            res.json({
-                itemsOutput
-            });
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal server error'
-            });
-        });
-});
-
-
 //DELETE
-app.delete('/item/:id', function (req, res) {
-    Items.findByIdAndRemove(req.params.id).exec().then(function (item) {
+app.delete('/event/:id', function (req, res) {
+    Events.findByIdAndRemove(req.params.id).exec().then(function (event) {
         return res.status(204).end();
     }).catch(function (err) {
         return res.status(500).json({
