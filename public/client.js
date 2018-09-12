@@ -396,6 +396,8 @@ ${buildPartnerList}
             $(`.my-events-page .self-view-display .self-view-display-list`).html(buildTheHtmlOutput);
             $('.edit-event-container').hide();
             $('.delete-event-container').hide();
+            $('.others-view-display').hide();
+            $('.self-view-display').show();
             executeCollapsible();
 
         })
@@ -410,7 +412,7 @@ ${buildPartnerList}
 
 function showJoinedEvents(userId) {
 
-    let userId = $("#loggedInUserId").val();
+    let user = $("#loggedInUserId").val();
 
     $.ajax({
             type: 'GET',
@@ -420,33 +422,28 @@ function showJoinedEvents(userId) {
         })
         .done(function (result) {
             console.log(result);
-            //console.log(result.eventsOutput);
 
-            let buildTheHtmlOutput = "";
-
-            let buildPartnerList = ``;
-            $.each(result.eventsOutput, function (resultKey, resultValue) {
-                buildPartnerList += `<li>
+            let buildTheHtmlOutput = ``;
+            $.each(result.checkUserEntry, function (resultKey, resultValue) {
+                let checkPartners = this.partners.filter(function filterPartner(val) {
+                    return !(val.partnerId == user)
+                });
+                let buildPartnerList = ``;
+                $.each(checkPartners, function (resultKey, resultValue) {
+                    buildPartnerList += `<li>
 <button class="collapsible contact-collapse">${resultValue.partnerName}</button>
 <div class="collapse-content contact-collapse-content">
 <p>Email: <span>${resultValue.partnerEmail}</span></p>
 <p>Phone: <span>${resultValue.partnerPhone}</span></p>
-<div class="approval-buttons">
-<button class="accept-button">Accept</button>
-<span>|</span>
-<button class="reject-button">Reject</button>
-</div>
 </div>
 </li>`
-            })
-            buildTheHtmlOutput += `<li class="creator-single-event-display" data-eventid=${resultValue._id}>`;
-            //console.log(resultKey, resultValue);
-            buildTheHtmlOutput += `<div class="event-update-buttons">
-<button class="edit-event-button">Edit</button>
-<span>|</span>
+                })
+                buildTheHtmlOutput += `<li class="partner-single-event-display" data-eventid=${resultValue._id}>`;
+                //console.log(resultKey, resultValue);
+                buildTheHtmlOutput += `<div class="event-update-buttons">
 <button class="delete-event-button">Delete</button>
 </div>`;
-            buildTheHtmlOutput += `<div class="single-event-info">
+                buildTheHtmlOutput += `<div class="single-event-info">
 <h3>${resultValue.eventTitle}</h3>
 <h4>Date</h4>
 <p>${resultValue.eventDate.slice(0,10)}, ${resultValue.eventTime}</p>
@@ -455,52 +452,35 @@ function showJoinedEvents(userId) {
 <h4>Status</h4>
 <p>Pending approval</p>
 </div>`;
-            buildTheHtmlOutput += `<div class="collapse-button">
+                buildTheHtmlOutput += `<div class="collapse-button">
 <button class="collapsible">My Partners</button>
 <ul class="collapse-content">
 ${buildPartnerList}
 </ul>
 </div>`;
-            buildTheHtmlOutput += `<div class="edit-event-container">
-<form class="edit-event-form">
-<h2 class="event-details-text">Edit Event</h2>
-<fieldset name="event-info" class="event-info">
-
-<label for="eventTitle">Event Title</label>
-<input role="textbox" type="text" name="title" class="editEventTitle" value="${resultValue.eventTitle}" required="">
-
-<label for="eventDate">Date</label>
-<input type="date" name="date" class="editEventDate" value="${resultValue.eventDate.slice(0,10)}" required="">
-
-<label for="eventTime">Time</label>
-<input type="time" name="time" class="editEventTime" value="${resultValue.eventTime}" required="">
-
-</fieldset>
-
-<button role="button" type="submit" class="save-event-button">Save</button>
-</form>
-</div>`;
-            buildTheHtmlOutput += `<div class="delete-event-container">
-<p>Removing <span class="delete-event-name">Game Of Chess</span></p>
-<p>The event will be permanently deleted.</p>
+                buildTheHtmlOutput += `<div class="delete-event-container">
+<p>Removing <span class="delete-event-name">${resultValue.eventTitle}</span></p>
+<p>You will be removed as a partner,</p>
 <button role="button" class="delete-event-button">Delete</button>
 </div>`;
-            buildTheHtmlOutput += `</li>`;
+                buildTheHtmlOutput += `</li>`;
 
+            })
+            //use the HTML output to show
+            $(`.my-events-page .others-view-display .others-view-display-list`).html(buildTheHtmlOutput);
+            $('.delete-event-container').hide();
+            $('.others-view-display').show();
+            $('.my-events-list-container').show();
+            $('.my-events-page').show();
+            $('.menu-page').show();
+            executeCollapsible();
         })
-    //use the HTML output to show
-    $(`.my-events-page .self-view-display .self-view-display-list`).html(buildTheHtmlOutput);
-    $('.edit-event-container').hide();
-    $('.delete-event-container').hide();
-    executeCollapsible();
-
-})
-//if the call is failing
-.fail(function (jqXHR, error, errorThrown) {
-    console.log(jqXHR);
-    console.log(error);
-    console.log(errorThrown);
-});
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
 
 }
 
@@ -510,9 +490,17 @@ $(document).on('change', '.filter-events', function (event) {
     var selectedValue = $('.filter-events option:selected').val();
     console.log(selectedValue);
     if (selectedValue == 0) {
+        $('.others-view-display').hide();
         showMyOwnEvents(userId);
-    } else
+    } else {
+        $('main').hide();
+        $('.nearby-events-page').hide();
+        $('.create-event-container').hide();
+        $('.no-events-text').hide();
+        $('.self-view-display').hide();
+        $(this).find('.delete-event-container').hide();
         showJoinedEvents(userId);
+    }
 });
 
 //Step 2: Use functions, objects and variables(Triggers)
