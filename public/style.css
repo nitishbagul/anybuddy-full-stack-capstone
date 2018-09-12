@@ -361,12 +361,13 @@ body {
 }
 
 .delete-event-container {
-    width: 80%;
+    width: 60%;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid #4a7f24;
     background-color: #EBF7E3;
     border-radius: 5px;
+    margin-top: 30px;
 }
 
 .delete-event-container * {

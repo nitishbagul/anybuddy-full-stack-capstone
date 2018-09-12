@@ -302,7 +302,7 @@ app.put('/event/partner/remove/:eventId/:partnerId', (req, res) => {
         .findByIdAndUpdate(req.params.eventId, {
             $pull: {
                 'partners': {
-                    _id: req.params.partnerId
+                    partnerId: req.params.partnerId
                 }
             }
         })

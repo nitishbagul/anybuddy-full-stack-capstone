@@ -189,6 +189,7 @@ function getUserLatLong() {
     function showPosition(position) {
         userLat = position.coords.latitude;
         userLng = position.coords.longitude;
+        console.log(userLat, userLng);
         $("#loggedInUserId").data("lat", userLat);
         $("#loggedInUserId").data("lng", userLng);
         showEventsNearUser(userLat, userLng);
@@ -266,10 +267,10 @@ function showEventsNearUser(userLat, userLng) {
                 executeCollapsible();
                 showMapEvents(validEvents);
                 //console.log("After showmap");
+                $('main').hide();
+                $('.my-events-page').hide();
+                $('.nearby-events-page').show();
                 $('.menu-page').show();
-                //                $('.username').text(result.username);
-                //                $('#loggedInUserId').val(result._id);
-
 
             }
 
@@ -285,6 +286,32 @@ function showEventsNearUser(userLat, userLng) {
 function reducePartnersRequiredCount(eventId, partnersRequired) {
 
     let actualPartners = partnersRequired - 1;
+    const newEventObject = {
+        id: eventId,
+        partnersRequired: actualPartners
+    };
+    $.ajax({
+            type: 'PUT',
+            url: `/event/${eventId}`,
+            dataType: 'json',
+            data: JSON.stringify(newEventObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+}
+
+function increasePartnersRequiredCount(eventId, partnersRequired) {
+
+    let actualPartners = partnersRequired + 1;
     const newEventObject = {
         id: eventId,
         partnersRequired: actualPartners
@@ -387,13 +414,14 @@ ${buildPartnerList}
                 buildTheHtmlOutput += `<div class="delete-event-container">
 <p>Removing <span class="delete-event-name">Game Of Chess</span></p>
 <p>The event will be permanently deleted.</p>
-<button role="button" class="delete-event-button">Delete</button>
+<button role="button" class="remove-event-button">Delete</button>
 </div>`;
                 buildTheHtmlOutput += `</li>`;
 
             })
             //use the HTML output to show
             $(`.my-events-page .self-view-display .self-view-display-list`).html(buildTheHtmlOutput);
+            $('.filter-events').val("0");
             $('.edit-event-container').hide();
             $('.delete-event-container').hide();
             $('.others-view-display').hide();
@@ -430,7 +458,7 @@ function showJoinedEvents(userId) {
                 });
                 let buildPartnerList = ``;
                 $.each(checkPartners, function (resultKey, resultValue) {
-                    buildPartnerList += `<li>
+                    buildPartnerList += `<li data-partnerid=${resultValue._id}>
 <button class="collapsible contact-collapse">${resultValue.partnerName}</button>
 <div class="collapse-content contact-collapse-content">
 <p>Email: <span>${resultValue.partnerEmail}</span></p>
@@ -441,7 +469,7 @@ function showJoinedEvents(userId) {
                 buildTheHtmlOutput += `<li class="partner-single-event-display" data-eventid=${resultValue._id}>`;
                 //console.log(resultKey, resultValue);
                 buildTheHtmlOutput += `<div class="event-update-buttons">
-<button class="delete-event-button">Delete</button>
+<button class="delete-event-button">Remove</button>
 </div>`;
                 buildTheHtmlOutput += `<div class="single-event-info">
 <h3>${resultValue.eventTitle}</h3>
@@ -458,16 +486,16 @@ function showJoinedEvents(userId) {
 ${buildPartnerList}
 </ul>
 </div>`;
-                buildTheHtmlOutput += `<div class="delete-event-container">
-<p>Removing <span class="delete-event-name">${resultValue.eventTitle}</span></p>
-<p>You will be removed as a partner,</p>
-<button role="button" class="delete-event-button">Delete</button>
+                buildTheHtmlOutput += `<div class="delete-event-container" data-partnernumber=${resultValue.partnersRequired}>
+<p>You will be removed as a partner</p>
+<button role="button" class="remove-event-button">Remove</button>
 </div>`;
                 buildTheHtmlOutput += `</li>`;
 
             })
             //use the HTML output to show
             $(`.my-events-page .others-view-display .others-view-display-list`).html(buildTheHtmlOutput);
+            $('.filter-events').val("1");
             $('.delete-event-container').hide();
             $('.others-view-display').show();
             $('.my-events-list-container').show();
@@ -557,15 +585,19 @@ $(document).on('click', '.my-events-button', function (event) {
     $('.my-events-list-container').show();
     $('.my-events-page').show();
     $('.menu-page').show();
+    $('.filter-events').val("0");
     showMyOwnEvents(userId);
 });
 
 $(document).on('click', '.nearby-events-button', function (event) {
     event.preventDefault();
+    let userLat = $("#loggedInUserId").data("lat");
+    let userLng = $("#loggedInUserId").data("lng");
     $('main').hide();
     $('.my-events-page').hide();
     $('.nearby-events-page').show();
     $('.menu-page').show();
+    showEventsNearUser(userLat, userLng);
 });
 
 $(document).on('click', '.event-content', function (event) {
@@ -624,7 +656,7 @@ $(document).on('click', '.edit-event-button', function (event) {
 
 });
 
-$(document).on('click', '.delete-event-button', function (event) {
+$(document).on('click', '.event-update-buttons .delete-event-button', function (event) {
     event.preventDefault();
     $('main').hide();
     $('.nearby-events-page').hide();
@@ -668,6 +700,47 @@ $(document).on('click', '.delete-event-container .delete-event-button', function
             console.log(errorThrown);
         });
     showMyOwnEvents(userId);
+});
+
+$(document).on('click', '.remove-event-button', function (event) {
+    event.preventDefault();
+    //    $('main').hide();
+    //    $('.nearby-events-page').hide();
+    //    $('.create-event-container').hide();
+    //    $('.edit-event-container').hide();
+    //    $('.delete-event-container').hide();
+    //    $('.my-events-list-container').show();
+    //    $('.my-events-page').show();
+    //    $('.menu-page').show();
+
+    let eventInfo = $(this).closest('li').data('eventid');
+    let requiredPartners = $(this).closest('.delete-event-container').data('partnernumber');
+    console.log(requiredPartners);
+    let userId = $("#loggedInUserId").val();
+
+    let editPartnerRequest = {
+        eventId: eventInfo
+    }
+
+    $.ajax({
+            type: 'PUT',
+            url: `/event/partner/remove/${eventInfo}/${userId}`,
+            dataType: 'json',
+            data: JSON.stringify(editPartnerRequest),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            displayError("Event removed succesfully");
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+    increasePartnersRequiredCount(eventInfo, requiredPartners);
+    showJoinedEvents(userId);
 });
 
 //Form Triggers
@@ -828,15 +901,6 @@ $(document).on('submit', '.request-join-form', function (event) {
     $('.menu-page').show();
 });
 
-//$('.create-event-form').submit(function (event) {
-//    event.preventDefault();
-//    $('main').hide();
-//    $('.nearby-events-page').hide();
-//    $('.create-event-form').hide();
-//    $('.my-events-list-container').show();
-//    $('.my-events-page').show();
-//    $('.menu-page').show();
-//});
 
 $('.create-event-form').submit(function (event) {
     event.preventDefault();
