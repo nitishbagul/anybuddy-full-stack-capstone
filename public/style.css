@@ -33,6 +33,28 @@ html {
     display: table;
 }
 
+.demoMessage {
+    position: fixed;
+    top: 0px;
+    left: 35%;
+    background-color: #ffce00;
+    color: #2c3531;
+    padding: 10px 5%;
+    width: 30%;
+    text-align: center;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.demoMessage span,
+.demoMessage a {
+    color: #2c3531;
+}
+
+.demoMessage a {
+    cursor: pointer;
+    color: #0375B4;
+}
 
 /*Welcome Page Style*/
 

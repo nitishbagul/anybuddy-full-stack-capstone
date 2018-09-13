@@ -535,7 +535,7 @@ $(document).on('change', '.filter-events', function (event) {
 
 $(document).ready(function () {
     executeCollapsible();
-    //    useAutoComplete();    $("#messageBox").hide();
+    $("#messageBox").hide();
     $('main').hide();
     $('.log-in-container').hide();
     $('.register-container').hide();
