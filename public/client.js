@@ -273,7 +273,7 @@ function showEventsNearUser(userLat, userLng) {
                 $('.menu-page').show();
 
             }
-
+            $("#messageBox").hide();
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -747,7 +747,7 @@ $(document).on('click', '.remove-event-button', function (event) {
 
 $('.login-form').submit(function (event) {
     event.preventDefault();
-
+    $("#messageBox").show();
     //take the input from the user
     const username = $("#loginUserName").val();
     const password = $("#loginPassword").val();
@@ -781,8 +781,8 @@ $('.login-form').submit(function (event) {
                 $('main').hide();
                 $('.my-events-page').hide();
                 $('#loggedInUserId').val(result._id);
-                getUserLatLong();
 
+                getUserLatLong();
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
