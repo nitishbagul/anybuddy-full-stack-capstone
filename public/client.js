@@ -362,11 +362,6 @@ function showMyOwnEvents(userId) {
 <div class="collapse-content contact-collapse-content">
 <p>Email: <span>${resultValue.partnerEmail}</span></p>
 <p>Phone: <span>${resultValue.partnerPhone}</span></p>
-<div class="approval-buttons">
-<button class="accept-button">Accept</button>
-<span>|</span>
-<button class="reject-button">Reject</button>
-</div>
 </div>
 </li>`
                 })
@@ -383,11 +378,9 @@ function showMyOwnEvents(userId) {
 <p>${resultValue.eventDate.slice(0,10)}, ${resultValue.eventTime}</p>
 <h4>Location</h4>
 <p>${resultValue.eventStreetAddress}, ${resultValue.eventCity}</p>
-<h4>Status</h4>
-<p>Pending approval</p>
 </div>`;
                 buildTheHtmlOutput += `<div class="collapse-button">
-<button class="collapsible">My Partners</button>
+<button class="collapsible" data-partnernumber=${checkPartners.length}>My Partners</button>
 <ul class="collapse-content">
 ${buildPartnerList}
 </ul>
@@ -412,7 +405,7 @@ ${buildPartnerList}
 </form>
 </div>`;
                 buildTheHtmlOutput += `<div class="delete-event-container">
-<p>Removing <span class="delete-event-name">Game Of Chess</span></p>
+<p>Removing <span class="delete-event-name">${resultValue.eventTitle}</span></p>
 <p>The event will be permanently deleted.</p>
 <button role="button" class="remove-event-button">Delete</button>
 </div>`;
@@ -477,8 +470,6 @@ function showJoinedEvents(userId) {
 <p>${resultValue.eventDate.slice(0,10)}, ${resultValue.eventTime}</p>
 <h4>Location</h4>
 <p>${resultValue.eventStreetAddress}, ${resultValue.eventCity}</p>
-<h4>Status</h4>
-<p>Pending approval</p>
 </div>`;
                 buildTheHtmlOutput += `<div class="collapse-button">
 <button class="collapsible">My Partners</button>
@@ -642,13 +633,23 @@ $(document).on('click', '.new-event-button', function (event) {
 
 });
 
+$(document).on('click', '.my-events-main-content button:contains("My Partners")', function (event) {
+    event.preventDefault();
+    let partnerNumber = $(this).data('partnernumber');
+
+    if (partnerNumber == 0) {
+        displayError("No partners");
+    }
+});
+
 $(document).on('click', '.edit-event-button', function (event) {
     event.preventDefault();
+    let eventId = $(this).closest('li').data('eventid');
     $('main').hide();
     $('.nearby-events-page').hide();
     $('.create-event-container').hide();
     $('.delete-event-container').hide();
-    $('.edit-event-container').show();
+    $(`li[data-eventid=${eventId}] .edit-event-container`).show();
     $('.my-events-list-container').show();
     $('.my-events-page').show();
     $('.menu-page').show();
@@ -658,11 +659,12 @@ $(document).on('click', '.edit-event-button', function (event) {
 
 $(document).on('click', '.event-update-buttons .delete-event-button', function (event) {
     event.preventDefault();
+    let eventId = $(this).closest('li').data('eventid');
     $('main').hide();
     $('.nearby-events-page').hide();
     $('.create-event-container').hide();
     $('.edit-event-container').hide();
-    $('.delete-event-container').show();
+    $(`li[data-eventid=${eventId}] .delete-event-container`).show();
     $('.my-events-list-container').show();
     $('.my-events-page').show();
     $('.menu-page').show();
@@ -780,6 +782,7 @@ $('.login-form').submit(function (event) {
                 console.log(result);
                 $('main').hide();
                 $('.my-events-page').hide();
+                $('.username').text(result.username);
                 $('#loggedInUserId').val(result._id);
 
                 getUserLatLong();
