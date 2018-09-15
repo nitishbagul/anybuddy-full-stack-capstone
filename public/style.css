@@ -294,6 +294,7 @@ body {
     width: 28.8%;
     height: 1000px;
     display: inline-block;
+    overflow-y: auto;
 }
 
 .map {
@@ -305,7 +306,6 @@ body {
 }
 
 .events-list {
-    border-bottom: solid 1px #444;
     padding: 10px 0 10px 5px;
     list-style: none;
 }

@@ -43,7 +43,7 @@ function initMap() {
             lat: 45.52,
             lng: -122.681944
         },
-        zoom: 15,
+        zoom: 13,
         zoomControl: true,
         zoomControlOptions: {
             position: google.maps.ControlPosition.LEFT_CENTER
@@ -56,6 +56,8 @@ function initMap() {
 //Map Function to show events
 
 function showMapEvents(events) {
+    let userLat = $("#loggedInUserId").data("lat");
+    let userLng = $("#loggedInUserId").data("lng");
     //console.log("Inside showmapevent");
     var bounds = new google.maps.LatLngBounds();
     //console.log(events.length);
@@ -68,7 +70,7 @@ function showMapEvents(events) {
             map: map
         });
 
-        bounds.extend(position)
+        bounds.extend(new google.maps.LatLng(userLat, userLng))
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
             return function () {
                 // console.log("info fn");
@@ -78,6 +80,7 @@ function showMapEvents(events) {
         })(marker, i));
     }
     map.fitBounds(bounds);
+    map.setZoom(10);
 
     var infowindow = new google.maps.InfoWindow();
 
@@ -189,6 +192,8 @@ function getUserLatLong() {
     function showPosition(position) {
         userLat = position.coords.latitude;
         userLng = position.coords.longitude;
+        //map.center.lat = userLat;
+        //map.center.lng = userLng;
         console.log(userLat, userLng);
         $("#loggedInUserId").data("lat", userLat);
         $("#loggedInUserId").data("lng", userLng);
@@ -208,26 +213,31 @@ function showEventsNearUser(userLat, userLng) {
         //if call is succefull
         .done(function (result) {
             console.log(result);
-            if (result.events.length === 0) {
-                displayError("No places found, please refine the search.")
+            let loggedInUser = $('#loggedInUserId').val();
+
+            let checkOwnEvents = result.events.filter(function findOwnEvents(val) {
+                return !(val.ownerId == loggedInUser)
+            });
+            //console.log(checkOwnEvents);
+            let checkUserEntry = checkOwnEvents.filter(function checkUser(event) {
+
+                let checkPartnerEntry = event.partners.filter(function checkPartner(partner) {
+                    return partner.partnerId == loggedInUser;
+                })
+                return (checkPartnerEntry.length) === 0;
+            });
+            //Filter events to check if required partners > 0
+            let validEvents = checkUserEntry.filter(function checkVal(val) {
+                return (val.partnersRequired) > 0
+            });
+            if (validEvents.length === 0) {
+                displayError("No events to show")
+                $('main').hide();
+                $('.my-events-page').hide();
+                $('.no-events-text').show();
+                $('.nearby-events-page').show();
+                $('.menu-page').show();
             } else {
-                let loggedInUser = $('#loggedInUserId').val();
-
-                let checkOwnEvents = result.events.filter(function findOwnEvents(val) {
-                    return !(val.ownerId == loggedInUser)
-                });
-                //console.log(checkOwnEvents);
-                let checkUserEntry = checkOwnEvents.filter(function checkUser(event) {
-
-                    let checkPartnerEntry = event.partners.filter(function checkPartner(partner) {
-                        return partner.partnerId == loggedInUser;
-                    })
-                    return (checkPartnerEntry.length) === 0;
-                });
-                //Filter events to check if required partners > 0
-                let validEvents = checkUserEntry.filter(function checkVal(val) {
-                    return (val.partnersRequired) > 0
-                });
                 let buildTheHtmlOutput = "";
 
                 $.each(validEvents, function (resultKey, resultValue) {
@@ -271,8 +281,8 @@ function showEventsNearUser(userLat, userLng) {
                 $('.my-events-page').hide();
                 $('.nearby-events-page').show();
                 $('.menu-page').show();
-
             }
+
             $("#messageBox").hide();
         })
         //if the call is failing
