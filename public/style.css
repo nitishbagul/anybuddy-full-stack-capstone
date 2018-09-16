@@ -21,6 +21,7 @@
 body,
 html {
     height: 100%;
+    min-height: 100vh;
 }
 
 .clearfix {
@@ -71,7 +72,8 @@ html {
     background: url("https://hikeandcycle.com/wp-content/uploads/2017/07/hikingbuddys-800x533.jpg") no-repeat center center fixed;
     background-size: cover;
     height: 100%;
-    width: unset;
+    min-height: 100vh;
+    width: 100%;
     background-position: center;
 }
 
@@ -232,7 +234,8 @@ body {
 */
 
 .topnav {
-    background: url("http://www.cashadvance6online.com/data/archive/img/3036912826.jpeg") no-repeat center center fixed;
+    /*    background: url("http://www.cashadvance6online.com/data/archive/img/3036912826.jpeg") no-repeat center center fixed;*/
+    background: url("http://i.imgur.com/bGd0jEz.jpg") no-repeat center center fixed;
     background-size: cover;
     height: 100%;
     width: unset;

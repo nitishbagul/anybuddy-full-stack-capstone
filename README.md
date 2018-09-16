@@ -6,7 +6,7 @@ Anybuddy lets you create events and helps you find like minded buddies
 
 Home Page View | Login Page View
 :-------------------------:|:-------------------------:
-![Home Page View](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/home-page-view.png)  |  ![Login Page View](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/login-page-view.png)
+![Home Page View](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/ab_home.png)  |  ![Login Page View](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/login-page-view.png)
 About Page | Items Page
 ![About Page](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/about-page.png) | ![Items Page](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/items-page.png)
 Create Item  | Places Page
@@ -15,12 +15,12 @@ Areas Page | Categories Page
 ![Areas Page](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/areas-page.png) | ![Categories Page](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/categories-page.png)
 
 ## Use Cases
-1. User should be able to create a list of items that they want to track.
-2. User should be able to create a 'Place' which can hold multiple items.
-3. User should be able to create an 'Area' which holds multiple places.
-4. User should be able to move an item between the places and a place between the areas.
-5. User should be able to able to search for items,places and areas.
-6. User should be able to delete the items,places and areas.
+1. User should be able to create an event and request for partners.
+2. User should be able to view events created by others.
+3. User should be able to join/leave an event created by others.
+4. User should be able to view its own events as well as the ones he has joined.
+5. User should be able to edit its own event.
+6. User should be able to delete its own events.
 
 ### UI Flow
 ![UI Flow handwritten draft](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/User-flow-WhereIsIt_1.jpg)

@@ -453,56 +453,71 @@ function showJoinedEvents(userId) {
         })
         .done(function (result) {
             console.log(result);
+            console.log(result.checkUserEntry.length);
+            if (result.checkUserEntry.length == 0) {
+                console.log(result.checkUserEntry.length);
+                displayError("You have not joined any event")
+                // $(`.my-events-page .others-view-display .others-view-display-list`).html(buildTheHtmlOutput);
+                $('.filter-events').val("1");
+                $('.delete-event-container').hide();
+                $('.others-view-display').show();
+                $('.my-events-list-container').show();
+                $('.my-events-page').show();
+                $('.menu-page').show();
+            } else {
+                let buildTheHtmlOutput = ``;
+                $.each(result.checkUserEntry, function (resultKey, resultValue) {
+                    let checkPartners = this.partners.filter(function filterPartner(val) {
+                        return !(val.partnerId == user)
+                    });
 
-            let buildTheHtmlOutput = ``;
-            $.each(result.checkUserEntry, function (resultKey, resultValue) {
-                let checkPartners = this.partners.filter(function filterPartner(val) {
-                    return !(val.partnerId == user)
-                });
-                let buildPartnerList = ``;
-                $.each(checkPartners, function (resultKey, resultValue) {
-                    buildPartnerList += `<li data-partnerid=${resultValue._id}>
+                    let buildPartnerList = ``;
+                    $.each(checkPartners, function (resultKey, resultValue) {
+                        buildPartnerList += `<li data-partnerid=${resultValue._id}>
 <button class="collapsible contact-collapse">${resultValue.partnerName}</button>
 <div class="collapse-content contact-collapse-content">
 <p>Email: <span>${resultValue.partnerEmail}</span></p>
 <p>Phone: <span>${resultValue.partnerPhone}</span></p>
 </div>
 </li>`
-                })
-                buildTheHtmlOutput += `<li class="partner-single-event-display" data-eventid=${resultValue._id}>`;
-                //console.log(resultKey, resultValue);
-                buildTheHtmlOutput += `<div class="event-update-buttons">
+                    })
+                    buildTheHtmlOutput += `<li class="partner-single-event-display" data-eventid=${resultValue._id}>`;
+                    //console.log(resultKey, resultValue);
+                    buildTheHtmlOutput += `<div class="event-update-buttons">
 <button class="delete-event-button">Remove</button>
 </div>`;
-                buildTheHtmlOutput += `<div class="single-event-info">
+                    buildTheHtmlOutput += `<div class="single-event-info">
 <h3>${resultValue.eventTitle}</h3>
 <h4>Date</h4>
 <p>${resultValue.eventDate.slice(0,10)}, ${resultValue.eventTime}</p>
 <h4>Location</h4>
 <p>${resultValue.eventStreetAddress}, ${resultValue.eventCity}</p>
 </div>`;
-                buildTheHtmlOutput += `<div class="collapse-button">
+                    buildTheHtmlOutput += `<div class="collapse-button">
 <button class="collapsible">My Partners</button>
 <ul class="collapse-content">
 ${buildPartnerList}
 </ul>
 </div>`;
-                buildTheHtmlOutput += `<div class="delete-event-container" data-partnernumber=${resultValue.partnersRequired}>
+                    buildTheHtmlOutput += `<div class="delete-event-container" data-partnernumber=${resultValue.partnersRequired}>
 <p>You will be removed as a partner</p>
 <button role="button" class="remove-event-button">Remove</button>
 </div>`;
-                buildTheHtmlOutput += `</li>`;
+                    buildTheHtmlOutput += `</li>`;
 
-            })
-            //use the HTML output to show
-            $(`.my-events-page .others-view-display .others-view-display-list`).html(buildTheHtmlOutput);
-            $('.filter-events').val("1");
-            $('.delete-event-container').hide();
-            $('.others-view-display').show();
-            $('.my-events-list-container').show();
-            $('.my-events-page').show();
-            $('.menu-page').show();
-            executeCollapsible();
+                })
+
+                //use the HTML output to show
+                $(`.my-events-page .others-view-display .others-view-display-list`).html(buildTheHtmlOutput);
+                $('.filter-events').val("1");
+                $('.delete-event-container').hide();
+                $('.others-view-display').show();
+                $('.my-events-list-container').show();
+                $('.my-events-page').show();
+                $('.menu-page').show();
+                executeCollapsible();
+            }
+
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
