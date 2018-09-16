@@ -33,6 +33,15 @@ html {
     display: table;
 }
 
+.fa-handshake:before {
+    content: "\f2b5";
+    color: white;
+    font-size: 35px;
+    margin-left: 15px;
+}
+
+/*f3c5*/
+
 .demoMessage {
     position: fixed;
     top: 0px;
@@ -212,6 +221,7 @@ body {
     text-align: center;
 }
 
+/*
 .topnav {
     overflow: hidden;
     background-color: #59992b;
@@ -219,10 +229,25 @@ body {
     width: 100%;
     padding: 5px;
 }
+*/
+
+.topnav {
+    background: url("http://www.cashadvance6online.com/data/archive/img/3036912826.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    width: unset;
+    background-position: center;
+}
+
+.icon {
+    display: inline-block;
+}
 
 .logo-text {
     color: white;
-    margin-left: 15px;
+    /*margin-left: 15px;
+*/
+    display: inline-block;
 }
 
 .nav-logo {
@@ -265,6 +290,14 @@ body {
     padding: 5px 5px;
 }
 
+/*
+.nearby-events-button:before {
+    content: '\f3c5';
+    color: black;
+    font-size: 20px;
+}
+*/
+
 .subnav {
     background-color: #9bd770;
     text-align: center;
@@ -274,12 +307,22 @@ body {
 .subnav button {
     display: inline-block;
     background-color: #9bd770;
-    color: black;
+    color: white;
     height: 50px;
     width: 50%;
     margin: 0;
     border-radius: 0;
     font-size: 20px;
+}
+
+
+.subnav button:hover {
+    color: green;
+}
+
+
+.js-menu-button {
+    background-color: #75d138 !important;
 }
 
 /**** Main Content Styles ****/

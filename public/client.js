@@ -575,6 +575,10 @@ $(document).on('click', '.register-link', function (event) {
 
 $(document).on('click', '.my-events-button', function (event) {
     event.preventDefault();
+    const targetButton = $('.my-events-button');
+    const otherButtons = $('.subnav button').not(targetButton);
+    otherButtons.removeClass('js-menu-button');
+    targetButton.addClass('js-menu-button');
     let userId = $("#loggedInUserId").val();
     $('main').hide();
     $('.nearby-events-page').hide();
@@ -592,6 +596,10 @@ $(document).on('click', '.my-events-button', function (event) {
 
 $(document).on('click', '.nearby-events-button', function (event) {
     event.preventDefault();
+    const targetButton = $('.nearby-events-button');
+    const otherButtons = $('.subnav button').not(targetButton);
+    otherButtons.removeClass('js-menu-button');
+    targetButton.addClass('js-menu-button');
     let userLat = $("#loggedInUserId").data("lat");
     let userLng = $("#loggedInUserId").data("lng");
     $('main').hide();
