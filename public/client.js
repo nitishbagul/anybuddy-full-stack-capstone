@@ -30,13 +30,6 @@ function executeCollapsible() {
 let map;
 
 function initMap() {
-    //    map = new google.maps.Map(document.getElementById('map'), {
-    //        center: {
-    //            lat: -34.397,
-    //            lng: 150.644
-    //        },
-    //        zoom: 8
-    //    });
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -168,7 +161,6 @@ function getLatLong(address) {
             })
             .then(function (response) {
                 console.log(response);
-                //console.log(response.data.results[0].geometry.location.lat);
                 let latLong = [response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng];
                 resolve(latLong);
 
@@ -184,14 +176,21 @@ function getLatLong(address) {
 function getUserLatLong() {
     let userLat, userLng;
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        console.log("running");
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+
     } else {
-        alert("Geolocation is not supported by this browser.");
+        displayError("Geolocation is not supported by this browser.");
     }
 
     function showPosition(position) {
+        console.log("running");
         userLat = position.coords.latitude;
         userLng = position.coords.longitude;
+        map.setCenter({
+            lat: userLat,
+            lng: userLng
+        });
         //map.center.lat = userLat;
         //map.center.lng = userLng;
         console.log(userLat, userLng);
@@ -199,6 +198,26 @@ function getUserLatLong() {
         $("#loggedInUserId").data("lng", userLng);
         showEventsNearUser(userLat, userLng);
     }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                displayError("Cannot procced without location access");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                displayError("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                displayError("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                displayError("An unknown error occurred.");
+                break;
+        }
+        location.reload();
+        displayError("Cannot procced without location access");
+    }
+
 }
 
 function showEventsNearUser(userLat, userLng) {
@@ -417,7 +436,7 @@ ${buildPartnerList}
                 buildTheHtmlOutput += `<div class="delete-event-container">
 <p>Removing <span class="delete-event-name">${resultValue.eventTitle}</span></p>
 <p>The event will be permanently deleted.</p>
-<button role="button" class="remove-event-button">Delete</button>
+<button role="button" class="remove-my-event-button">Delete</button>
 </div>`;
                 buildTheHtmlOutput += `</li>`;
 
@@ -704,17 +723,10 @@ $(document).on('click', '.event-update-buttons .delete-event-button', function (
 
 });
 
-$(document).on('click', '.delete-event-container .delete-event-button', function (event) {
+$(document).on('click', '.remove-my-event-button', function (event) {
     event.preventDefault();
-    $('main').hide();
-    $('.nearby-events-page').hide();
-    $('.create-event-container').hide();
-    $('.edit-event-container').hide();
-    $('.delete-event-container').hide();
-    $('.my-events-list-container').show();
-    $('.my-events-page').show();
-    $('.menu-page').show();
 
+    $(this).closest('li').hide();
     let eventId = $(this).closest('li').data('eventid');
     let userId = $("#loggedInUserId").val();
 
@@ -734,20 +746,11 @@ $(document).on('click', '.delete-event-container .delete-event-button', function
             console.log(error);
             console.log(errorThrown);
         });
-    showMyOwnEvents(userId);
 });
 
 $(document).on('click', '.remove-event-button', function (event) {
     $(this).closest('li').hide();
     event.preventDefault();
-    //    $('main').hide();
-    //    $('.nearby-events-page').hide();
-    //    $('.create-event-container').hide();
-    //    $('.edit-event-container').hide();
-    //    $('.delete-event-container').hide();
-    //    $('.my-events-list-container').show();
-    //    $('.my-events-page').show();
-    //    $('.menu-page').show();
 
     let eventInfo = $(this).closest('li').data('eventid');
     let requiredPartners = $(this).closest('.delete-event-container').data('partnernumber');
@@ -886,7 +889,6 @@ $('.register-form').submit(function (event) {
 $(document).on('submit', '.request-join-form', function (event) {
     event.preventDefault();
     let requiredPartners = $(this).data('partnernumber');
-    //console.log(requiredPartners);
 
     let eventId = $(this).closest('li').data('eventid');
     let partnerId = $('#loggedInUserId').val();
@@ -966,16 +968,7 @@ $('.create-event-form').submit(function (event) {
     //validate the input
     if (eventTitle == "") {
         displayError('Please add event title');
-    }
-    //    else if (areaName == "Select.." || areaName == undefined || areaName == "") {
-    //        displayError('Please add an Area');
-    //    } else if (placeName == "Select.." || placeName == undefined || placeName == "") {
-    //        displayError('Please add a Place');
-    //    } else if (categoryName == "Select.." || categoryName == undefined || categoryName == "") {
-    //        displayError('Please add a Category');
-    //    }
-    //if the input is valid
-    else {
+    } else {
         let lat, lng;
         let adddressString = `${eventStreetAddress} ${eventCity} ${eventState}`;
         getLatLong(adddressString).then((result) => {
@@ -1053,18 +1046,6 @@ $(document).on('submit', '.edit-event-form', function (event) {
     event.preventDefault();
 
     let userId = $("#loggedInUserId").val();
-    //    $('main').hide();
-    //    $('.nearby-events-page').hide();
-    //    $('.create-event-container').hide();
-    //    $('.no-events-text').hide();
-    //    $('.others-view-display').hide();
-    //    $(this).find('.edit-event-container').hide();
-    //    $(this).find('.delete-event-container').hide();
-    //    $('.my-events-list-container').show();
-    //    $('.my-events-page').show();
-    //    $('.menu-page').show();
-    //    showMyOwnEvents(userId);
-
     const eventTitle = $(this).find(".editEventTitle").val();
     const eventDate = $(this).find(".editEventDate").val();
     const eventTime = $(this).find(".editEventTime").val();
@@ -1086,17 +1067,7 @@ $(document).on('submit', '.edit-event-form', function (event) {
         })
         //if call is succefull
         .done(function (result) {
-            console.log(result);
-
-            //            $('main').hide();
-            //            $('.nearby-events-page').hide();
-            //            $('.create-event-container').hide();
-            //            $('.edit-event-container').hide();
-            //            $('.delete-event-container').hide();
-            //            $('.my-events-list-container').show();
-            //            $('.my-events-page').show();
-            //            $('.menu-page').show();
-
+            //console.log(result);
             displayError("Event edited succesfully");
             showMyOwnEvents(userId);
         })
