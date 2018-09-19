@@ -738,6 +738,7 @@ $(document).on('click', '.delete-event-container .delete-event-button', function
 });
 
 $(document).on('click', '.remove-event-button', function (event) {
+    $(this).closest('li').hide();
     event.preventDefault();
     //    $('main').hide();
     //    $('.nearby-events-page').hide();
@@ -775,7 +776,7 @@ $(document).on('click', '.remove-event-button', function (event) {
             console.log(errorThrown);
         });
     increasePartnersRequiredCount(eventInfo, requiredPartners);
-    showJoinedEvents(userId);
+    //showJoinedEvents(userId);
 });
 
 //Form Triggers
@@ -926,10 +927,11 @@ $(document).on('submit', '.request-join-form', function (event) {
             console.log(error);
             console.log(errorThrown);
         });
+    $(this).closest('li').hide();
     let userLat = $("#loggedInUserId").data("lat");
     let userLng = $("#loggedInUserId").data("lng");
     reducePartnersRequiredCount(eventId, requiredPartners);
-    showEventsNearUser(userLat, userLng);
+    //showEventsNearUser(userLat, userLng);
     $('main').hide();
     $('.my-events-page').hide();
     $('.event-joining').hide();
@@ -1064,7 +1066,7 @@ $(document).on('submit', '.edit-event-form', function (event) {
     //    showMyOwnEvents(userId);
 
     const eventTitle = $(this).find(".editEventTitle").val();
-    const eventDate = $(this).find(".editEventDatw").val();
+    const eventDate = $(this).find(".editEventDate").val();
     const eventTime = $(this).find(".editEventTime").val();
 
     let eventId = $(this).closest('li').data('eventid');
