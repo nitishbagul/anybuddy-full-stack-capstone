@@ -58,9 +58,9 @@ function generateEventsData() {
         ownerId: "1234",
         ownerName: faker.name.firstName(),
         ownerEmail: faker.internet.email(),
-        ownerPhone: faker.random.phoneNumber(),
+        ownerPhone: faker.phone.phoneNumber(),
         eventTitle: faker.random.words(),
-        eventDate: faker.date.soon(),
+        eventDate: faker.date.recent(),
         eventTime: faker.random.word(),
         eventStreetAddress: faker.address.streetAddress(),
         eventCity: faker.address.city(),
@@ -108,7 +108,7 @@ describe('anybuddy-full-stack-capstone', function () {
             return chai.request(app)
                 .get('/events/get/all/1234')
                 .then(function (res) {
-                    console.log(res.body);
+                    //console.log(res.body);
                     //Status 200
                     expect(res).to.have.status(200);
                     //Should be a json
@@ -144,95 +144,104 @@ describe('anybuddy-full-stack-capstone', function () {
     });
     describe('POST endpoint', function () {
 
-        it('should add a new item', function () {
+        it('should add a new event', function () {
             const newEvent = generateEventsData();
 
             return chai.request(app)
                 .post('/events/create')
-                .send(newItem)
+                .send(newEvent)
                 .then(function (res) {
+                    console.log(res.body);
                     expect(res).to.have.status(200);
                     expect(res).to.be.json;
                     expect(res.body).to.be.a('object');
-                    expect(res.body).to.include.keys('itemName', 'areaName', 'areaId', 'placeName', 'placeId', 'categoryName', 'categoryId');
-                    expect(res.body.itemName).to.equal(newItem.itemName);
-                    expect(res.body.areaName).to.equal(newItem.areaName);
-                    expect(res.body.areaId).to.equal(newItem.areaId);
-                    expect(res.body.placeName).to.equal(newItem.placeName);
-                    expect(res.body.placeId).to.equal(newItem.placeId);
-                    expect(res.body.categoryName).to.equal(newItem.categoryName);
-                    expect(res.body.categoryId).to.equal(newItem.categoryId);
-                    expect(res.body._id).to.not.be.null;
+                    expect(res.body).to.include.keys('ownerId', 'ownerName', 'ownerEmail', 'ownerPhone', 'eventTitle', 'eventDate', 'eventTime', 'eventStreetAddress', 'eventCity', 'eventState', 'eventCountry', 'lat', 'lng', 'partnersRequired');
+                    expect(res.body.ownerId).to.equal(newEvent.ownerId);
+                    expect(res.body.ownerName).to.equal(newEvent.ownerName);
+                    expect(res.body.ownerEmail).to.equal(newEvent.ownerEmail);
+                    expect(res.body.ownerPhone).to.equal(newEvent.ownerPhone);
+                    expect(res.body.eventTitle).to.equal(newEvent.eventTitle);
+                    expect(res.body.eventTime).to.equal(newEvent.eventTime);
+                    expect(res.body.eventStreetAddress).to.equal(newEvent.eventStreetAddress);
+                    expect(res.body.eventCity).to.equal(newEvent.eventCity);
+                    expect(res.body.eventState).to.equal(newEvent.eventState);
+                    expect(res.body.eventCountry).to.equal(newEvent.eventCountry);
+                    expect(res.body.lat).to.equal(parseFloat(newEvent.lat));
+                    expect(res.body.lng).to.equal(parseFloat(newEvent.lng));
+                    expect(res.body.partnersRequired).to.equal(newEvent.partnersRequired);
 
-                    return Items.findById(res.body._id);
+                    return Events.findById(res.body._id);
                 })
-                .then(function (item) {
-                    expect(item.itemName).to.equal(newItem.itemName);
-                    expect(item.areaName).to.equal(newItem.areaName);
-                    expect(item.areaId).to.equal(newItem.areaId);
-                    expect(item.placeName).to.equal(newItem.placeName);
-                    expect(item.placeId).to.equal(newItem.placeId);
-                    expect(item.categoryName).to.equal(newItem.categoryName);
-                    expect(item.categoryId).to.equal(newItem.categoryId);
+                .then(function (event) {
+                    expect(event.ownerId).to.equal(newEvent.ownerId);
+                    expect(event.ownerName).to.equal(newEvent.ownerName);
+                    expect(event.ownerEmail).to.equal(newEvent.ownerEmail);
+                    expect(event.ownerPhone).to.equal(newEvent.ownerPhone);
+                    expect(event.eventTitle).to.equal(newEvent.eventTitle);
+                    expect(event.eventTime).to.equal(newEvent.eventTime);
+                    expect(event.eventStreetAddress).to.equal(event.eventStreetAddress);
+                    expect(event.eventCity).to.equal(newEvent.eventCity);
+                    expect(event.eventState).to.equal(newEvent.eventState);
+                    expect(event.eventCountry).to.equal(newEvent.eventCountry);
+                    expect(event.lat).to.equal(parseFloat(newEvent.lat));
+                    expect(event.lng).to.equal(parseFloat(newEvent.lng));
+                    expect(event.partnersRequired).to.equal(newEvent.partnersRequired);
                 });
         });
 
     });
 
-    //    describe('PUT endpoint', function () {
-    //
-    //        it('should update item fields you send over', function () {
-    //            const updateItem = {
-    //                placeName: 'fofoplace',
-    //                placeId: 'fofoplaceid',
-    //                areaName: 'fofoarea',
-    //                areaId: 'fofoareaid'
-    //            };
-    //
-    //            return Items
-    //                .findOne()
-    //                .then(function (item) {
-    //                    updateItem.id = item._id;
-    //
-    //                    // make request then inspect it to make sure it reflects
-    //                    // data we sent
-    //                    return chai.request(app)
-    //                        .put(`/items/${item._id}`)
-    //                        .send(updateItem);
-    //                })
-    //                .then(function (res) {
-    //                    expect(res).to.have.status(204);
-    //
-    //                    return Items.findById(updateItem.id);
-    //                })
-    //                .then(function (itemElement) {
-    //                    expect(itemElement.placeName).to.equal(updateItem.placeName);
-    //                    expect(itemElement.placeId).to.equal(updateItem.placeId);
-    //                    expect(itemElement.areaName).to.equal(updateItem.areaName);
-    //                    expect(itemElement.areaId).to.equal(updateItem.areaId);
-    //                });
-    //        });
-    //    });
-    //
-    //    describe('DELETE endpoint', function () {
-    //
-    //        it('delete an item by id', function () {
-    //            let anyItem;
-    //
-    //            return Items
-    //                .findOne()
-    //                .then(function (_resItem) {
-    //                    anyItem = _resItem;
-    //                    return chai.request(app).delete(`/item/${anyItem._id}`);
-    //                })
-    //                .then(function (res) {
-    //                    expect(res).to.have.status(204);
-    //                    return Items.findById(anyItem._id);
-    //                })
-    //                .then(function (_resItem) {
-    //                    expect(_resItem).to.be.null;
-    //                });
-    //
-    //        });
-    //    });
+    describe('PUT endpoint', function () {
+
+        it('should update event fields you send over', function () {
+            const updateEvent = {
+                eventTitle: 'editedTitle',
+                eventTime: 'anytime',
+                partnersRequired: 4
+            };
+
+            return Events
+                .findOne()
+                .then(function (event) {
+                    updateEvent.id = event._id;
+
+                    // make request then inspect it to make sure it reflects
+                    // data we sent
+                    return chai.request(app)
+                        .put(`/event/${event._id}`)
+                        .send(updateEvent);
+                })
+                .then(function (res) {
+                    expect(res).to.have.status(204);
+
+                    return Events.findById(updateEvent.id);
+                })
+                .then(function (eventElement) {
+                    expect(eventElement.eventTitle).to.equal(updateEvent.eventTitle);
+                    expect(eventElement.eventTime).to.equal(updateEvent.eventTime);
+                    expect(eventElement.partnersRequired).to.equal(updateEvent.partnersRequired);
+                });
+        });
+    });
+    describe('DELETE endpoint', function () {
+
+        it('delete an event by id', function () {
+            let anyEvent;
+
+            return Events
+                .findOne()
+                .then(function (_resEvent) {
+                    anyEvent = _resEvent;
+                    return chai.request(app).delete(`/event/${anyEvent._id}`);
+                })
+                .then(function (res) {
+                    expect(res).to.have.status(204);
+                    return Events.findById(anyEvent._id);
+                })
+                .then(function (_resEvent) {
+                    expect(_resEvent).to.be.null;
+                });
+
+        });
+    });
 });

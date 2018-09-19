@@ -388,12 +388,6 @@ app.get('/events/get/:userLat/:userLng', function (req, res) {
         })
         .then(function (events) {
             console.log(events);
-            //            let eventsOutput = [];
-            //            items.map(function (item) {
-            //                if (item.loggedInUserId == req.params.id) {
-            //                    itemsOutput.push(item);
-            //                }
-            //            });
             res.json({
                 events
             });
