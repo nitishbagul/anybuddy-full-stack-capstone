@@ -1,18 +1,17 @@
 # anybuddy-full-stack-capstone
 
-Anybuddy lets you create events and helps you find like minded buddies
+Anybuddy lets you create events and helps you find like minded buddies.
 
 ## Screenshots
 
-Home Page View | Login Page View
-:-------------------------:|:-------------------------:
-![Home Page View](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/ab_home.png)  |  ![Login Page View](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/login-page-view.png)
-About Page | Items Page
-![About Page](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/about-page.png) | ![Items Page](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/items-page.png)
-Create Item  | Places Page
-![Create Item](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/create-item.png) | ![Places Page](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/places-page.png)
-Areas Page | Categories Page
-![Areas Page](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/areas-page.png) | ![Categories Page](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/categories-page.png)
+Welcome Page View
+![Welcome Page View](https://github.com/nitishbagul/anybuddy-full-stack-capstone/blob/master/github-images/ab_welcome.png)
+Home Page View
+![Home Page View](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/ab_home.png)
+Own Events
+![Own Events](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/ab_own.png)
+Joined Events
+![Joined Events](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/ab_joined.png)
 
 ## Use Cases
 1. User should be able to create an event and request for partners.
@@ -24,10 +23,10 @@ Areas Page | Categories Page
 7. User should not be able to edit events created by others.
 
 ### UI Flow
-![UI Flow handwritten draft](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/User-flow-WhereIsIt_1.jpg)
+![UI Flow handwritten draft](https://github.com/nitishbagul/anybuddy-full-stack-capstone/blob/master/github-images/ui-flow.jpg)
 
 ### Wireframe _main
-![Wireframe _Main](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/wireframes.jpg)
+![Wireframe _Main](https://github.com/nitishbagul/anybuddy-full-stack-capstone/blob/master/github-images/wireframes.jpg)
 
 ## Working Prototype
 You can find a Node.js working prototype of the app here: https://anybuddy-full-stack-capstone.herokuapp.com/ and React prototype here:
