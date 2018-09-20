@@ -21,6 +21,7 @@ Areas Page | Categories Page
 4. User should be able to view its own events as well as the ones he has joined.
 5. User should be able to edit its own event.
 6. User should be able to delete its own events.
+7. User should not be able to edit events created by others.
 
 ### UI Flow
 ![UI Flow handwritten draft](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/User-flow-WhereIsIt_1.jpg)
@@ -34,13 +35,12 @@ You can find a Node.js working prototype of the app here: https://anybuddy-full-
 ## Functionality
 The app's functionality includes:
 * Every User has the ability to create an account that stores information unique to them
-* User can Add, delete and update - Items, Places, Areas and Categories
-* User can search items and places
+* User can add events and mention number of partners required
+* Other users can view events near them and can also join them if the spot is available.
 
 ## Technology
 * Front-End: HTML5 | CSS3 | JavaScript ES6 | jQuery
 * Back-End: Node.js | Express.js | Mocha | Chai | RESTful API Endpoints | MongoDB | Mongoose
-
 
 
 ## Responsive
@@ -48,8 +48,8 @@ App is strongly built to be usuable on mobile devices, as well as responsive acr
 
 ## Development Roadmap
 This is v1.0 of the app, but future enhancements are expected to include:
-* Reminders and email notifications about the status of the items
-* Supporting multiple categories for single item
+* Ability to accept/reject the join event request
+* View past events log
 
 #  The typical command lines for capstone projects
 
