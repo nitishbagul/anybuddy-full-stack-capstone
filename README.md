@@ -7,11 +7,11 @@ Anybuddy lets you create events and helps you find like minded buddies.
 Welcome Page View
 ![Welcome Page View](https://github.com/nitishbagul/anybuddy-full-stack-capstone/blob/master/github-images/ab_welcome.png)
 Home Page View
-![Home Page View](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/ab_home.png)
+![Home Page View](https://github.com/nitishbagul/anybuddy-full-stack-capstone/blob/master/github-images/ab_home.png)
 Own Events
-![Own Events](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/ab_own.png)
+![Own Events](https://github.com/nitishbagul/anybuddy-full-stack-capstone/blob/master/github-images/ab_own.png)
 Joined Events
-![Joined Events](https://github.com/nitishbagul/where-is-it-node-capstone/blob/master/github-images/ab_joined.png)
+![Joined Events](https://github.com/nitishbagul/anybuddy-full-stack-capstone/blob/master/github-images/ab_joined.png)
 
 ## Use Cases
 1. User should be able to create an event and request for partners.
