@@ -214,8 +214,6 @@ function getUserLatLong() {
                 displayError("An unknown error occurred.");
                 break;
         }
-        location.reload();
-        displayError("Cannot procced without location access");
     }
 
 }
