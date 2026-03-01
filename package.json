@@ -1,11 +1,14 @@
 {
     "name": "anybuddy-full-stack-capstone",
     "version": "1.0.0",
+    "engines": {
+    "node": "18.x"
+    },
     "description": "Anybuddy lets you create events and helps you find like minded buddies",
     "main": "server.js",
     "dependencies": {
         "@google/maps": "^0.5.5",
-        "bcrypt": "^3.0.0",
+        "bcrypt": "^5.1.1",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.18.3",
         "cors": "^2.8.4",
