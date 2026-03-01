@@ -25,7 +25,7 @@ function runServer(urlToUse) {
                 return reject(err);
             }
             server = app.listen(process.env.PORT || 8080, () => {
-                console.log(`Listening on localhost:${config.PORT}`);
+                console.log(`Listening on localhost:${process.env.PORT || 8080}`);
                 resolve();
             }).on('error', err => {
                 mongoose.disconnect();
