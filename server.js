@@ -2,10 +2,6 @@ console.log('DATABASE_URL:', process.env.DATABASE_URL);
 const User = require('./models/user');
 const Events = require('./models/events');
 const bodyParser = require('body-parser');
-const config = {
-    PORT: process.env.PORT || 8080,
-    DATABASE_URL: process.env.MONGODB_URI
-};
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
@@ -28,7 +24,7 @@ function runServer(urlToUse) {
             if (err) {
                 return reject(err);
             }
-            server = app.listen(config.PORT, () => {
+            server = app.listen(process.env.PORT || 8080, () => {
                 console.log(`Listening on localhost:${config.PORT}`);
                 resolve();
             }).on('error', err => {
@@ -40,7 +36,7 @@ function runServer(urlToUse) {
 }
 
 if (require.main === module) {
-    runServer(config.DATABASE_URL).catch(err => console.error(err));
+    runServer(process.env.DATABASE_URL).catch(err => console.error(err));
 }
 
 function closeServer() {
