@@ -1,7 +1,10 @@
 const User = require('./models/user');
 const Events = require('./models/events');
 const bodyParser = require('body-parser');
-const config = require('./config');
+const config = {
+    PORT: process.env.PORT || 8080,
+    DATABASE_URL: process.env.MONGODB_URI
+};
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
