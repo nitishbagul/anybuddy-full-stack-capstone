@@ -1,3 +1,4 @@
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
 const User = require('./models/user');
 const Events = require('./models/events');
 const bodyParser = require('body-parser');
